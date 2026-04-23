@@ -4,12 +4,12 @@ import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 const videos = [
   {
-    src: "/assets/video/DJI_20251115160642_0872_D.MP4",
+    src: "/assets/video/VID-20250317-WA0035.mp4",
     title: "D School in Action",
     subtitle: "Campus & Training Facilities",
   },
   {
-    src: "/assets/video/video_20250315_184508.mp4",
+    src: "/assets/video/VID-20250317-WA0035.mp4",
     title: "Healthcare Excellence",
     subtitle: "Our Programs & Community",
   },
