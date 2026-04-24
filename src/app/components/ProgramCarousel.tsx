@@ -11,7 +11,6 @@ const programs = [
   { title: "NURSE 360", subtitle: "Nursing Finishing School Program", slug: "nurse-360", gradient: "from-[#1E3A8A] via-[#172F6E] to-[#0F1E4A]" },
   { title: "L.A.N.T.E.R.N", subtitle: "Nightingale Champions", slug: "lantern", gradient: "from-[#D4AF37] via-[#E5C451] to-[#C5A029]" },
   { title: "Leadership Integrated", subtitle: "One Year Transformation", slug: "leadership-integrated", gradient: "from-[#1E3A8A] via-[#172F6E] to-[#0F1E4A]" },
-  { title: "Hospital Manager", subtitle: "Competency Programs", slug: "hospital-manager", gradient: "from-[#1E3A8A] via-[#0F1E4A] to-[#0A1428]" },
 ];
 
 export default function ProgramCarousel() {
