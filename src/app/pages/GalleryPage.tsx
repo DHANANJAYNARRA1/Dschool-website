@@ -74,14 +74,9 @@ const GALLERY_ITEMS = [
   { id: 44, category: "DHR Program",  title: "EHR Implementation Training",      date: "December 2025",  image: "/assets/DHR Programs/img6.jpeg" },
   { id: 49, category: "DHR Program",  title: "DHR Capstone Presentations",       date: "December 2025",  image: "/assets/DHR Programs/img7.jpeg" },
 
-  // ── Events ─────────────────────────────────────────────────────────────────
-  { id: 45, category: "Events",       title: "D School Annual Meet 2026",        date: "March 2026",     image: null },
-  { id: 46, category: "Events",       title: "Healthcare Excellence Awards",     date: "February 2026",  image: null },
-  { id: 47, category: "Events",       title: "ASCI Partnership Ceremony",        date: "January 2026",   image: null },
-  { id: 48, category: "Events",       title: "Nurses Day Celebration 2025",      date: "May 2025",       image: null },
 ];
 
-const CATEGORIES = ["All", "Workshops", "Webinars", "LION Program", "DHR Program", "Events"];
+const CATEGORIES = ["All", "Workshops", "Webinars", "LION Program", "DHR Program"];
 
 const highlights = [
   { icon: Calendar, title: "50+ Events",          description: "Workshops, webinars, and training programs conducted" },
@@ -254,9 +249,9 @@ export default function GalleryPage() {
                   initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.03, duration: 0.2 }}
-                  whileHover={{ scale: 1.04, zIndex: 10 }}
-                  onClick={() => setLightboxIndex(index)}
-                  className="aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group relative bg-slate-100 border border-slate-200"
+                  whileHover={item.image ? { scale: 1.04, zIndex: 10 } : {}}
+                  onClick={item.image ? () => setLightboxIndex(index) : undefined}
+                  className={`aspect-square rounded-2xl overflow-hidden shadow-sm transition-all group relative bg-slate-100 border border-slate-200 ${item.image ? "hover:shadow-xl cursor-pointer" : ""}`}
                 >
                   {item.image ? (
                     <img

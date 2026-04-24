@@ -129,6 +129,40 @@ export async function uploadCVToCloudinary(file: File): Promise<string> {
 // Step 2a ── Applicant gets a confirmation email
 // reply_to uses the applicant's own email — avoids the .healthcare TLD rejection bug in EmailJS
 export async function sendPlacementUserEmail(data: PlacementEmailData) {
+  const date = formatDate();
+  const SEP = '━━━━━━━━━━━━━━━━━━━━━━━━━';
+  const message = [
+    `Dear ${data.fullName},`,
+    '',
+    'Thank you for submitting your application to D School Placements!',
+    '',
+    'We have successfully received your CV and our placement team will review it shortly.',
+    '',
+    SEP,
+    'YOUR SUBMISSION DETAILS',
+    SEP,
+    `Name              : ${data.fullName}`,
+    `Email             : ${data.email}`,
+    `Phone             : ${data.phone}`,
+    `Specialization    : ${data.specialization}`,
+    `Submitted On      : ${date}`,
+    SEP,
+    '',
+    'What happens next?',
+    '1. Our team reviews your CV',
+    '2. You\'ll receive a call for a brief screening',
+    '3. We match you with suitable openings',
+    '4. Interview preparation & placement support',
+    '',
+    'We will respond within 2–3 business days.',
+    'If you have any questions, reach us at dschool@sims.healthcare.',
+    '',
+    'Best regards,',
+    'The D School Placement Team',
+    '📞 +91 91007 77107',
+    '📧 dschool@sims.healthcare.',
+  ].join('\n');
+
   return emailjs.send(
     EMAIL_CONFIG.PLACEMENT_SERVICE_ID,
     EMAIL_CONFIG.PLACEMENT_USER_TEMPLATE_ID,
@@ -140,17 +174,38 @@ export async function sendPlacementUserEmail(data: PlacementEmailData) {
       user_email:      data.email,
       phone:           data.phone,
       specialization:  data.specialization,
-      submission_date: formatDate(),
+      submission_date: date,
+      message,
       reply_to:        data.email,
     },
     EMAIL_CONFIG.PLACEMENT_PUBLIC_KEY   // ← key for the account that owns service_zsnwhem
   );
 }
 
-// Step 2b ── Admin gets all details + a permanent CV download link
+// Step 2b ── Admin gets all details + CV attached by applicant
 export async function sendPlacementAdminEmail(
   data: PlacementEmailData & { cvLink: string; cvFilename: string }
 ) {
+  const date = formatDate();
+  const SEP = '━━━━━━━━━━━━━━━━━━━━━━━━━';
+  const message = [
+    'A new placement application has been received. The CV is attached to this email.',
+    'Reply to this email to contact the applicant directly.',
+    '',
+    SEP,
+    'APPLICANT DETAILS',
+    SEP,
+    `Full Name         : ${data.fullName}`,
+    `Email             : ${data.email}`,
+    `Phone             : ${data.phone}`,
+    `Specialization    : ${data.specialization}`,
+    `Submitted On      : ${date}`,
+    '',
+    '',
+    'D School Team.',
+    'dschool@sims.healthcare.',
+  ].join('\n');
+
   return emailjs.send(
     EMAIL_CONFIG.PLACEMENT_SERVICE_ID,
     EMAIL_CONFIG.PLACEMENT_ADMIN_TEMPLATE_ID,
@@ -159,9 +214,10 @@ export async function sendPlacementAdminEmail(
       user_email:      data.email,
       phone:           data.phone,
       specialization:  data.specialization,
-      submission_date: formatDate(),
+      submission_date: date,
       cv_filename:     data.cvFilename,
       cv_link:         data.cvLink,
+      message,
       reply_to:        data.email,
     },
     EMAIL_CONFIG.PLACEMENT_PUBLIC_KEY
