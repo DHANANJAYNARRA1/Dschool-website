@@ -101,18 +101,12 @@ export interface PlacementEmailData {
   specialization: string;
 }
 
-// Step 1 ── Upload CV to Cloudinary (raw storage) and return a Google Docs Viewer URL.
-// Google Docs Viewer renders PDFs, DOC, and DOCX directly in the browser with no
-// "Failed to load" errors or 401s — it fetches the file from Cloudinary on its own.
 export async function uploadCVToCloudinary(file: File): Promise<string> {
-  const ext = file.name.split('.').pop()?.toLowerCase() ?? '';
-  const baseName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '');
-  const publicId = `cv_${Date.now()}_${baseName}.${ext}`;
-
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', EMAIL_CONFIG.CLOUDINARY_UPLOAD_PRESET);
-  formData.append('public_id', publicId);
+  formData.append('use_filename', 'true');
+  formData.append('unique_filename', 'true');
 
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${EMAIL_CONFIG.CLOUDINARY_CLOUD_NAME}/raw/upload`,
@@ -152,11 +146,6 @@ export async function sendPlacementUserEmail(data: PlacementEmailData) {
 export async function sendPlacementAdminEmail(
   data: PlacementEmailData & { cvLink: string; cvFilename: string }
 ) {
-  // direct Cloudinary URL — works as both view (PDF opens in browser) and download
-  const directUrl = data.cvLink;
-  // fl_attachment forces download in browsers that support it
-  const downloadUrl = directUrl.replace('/upload/', '/upload/fl_attachment/');
-
   return emailjs.send(
     EMAIL_CONFIG.PLACEMENT_SERVICE_ID,
     EMAIL_CONFIG.PLACEMENT_ADMIN_TEMPLATE_ID,
@@ -167,8 +156,7 @@ export async function sendPlacementAdminEmail(
       specialization:  data.specialization,
       submission_date: formatDate(),
       cv_filename:     data.cvFilename,
-      cv_link:         directUrl,
-      cv_download:     downloadUrl,
+      cv_link:         data.cvLink,
       reply_to:        data.email,
     },
     EMAIL_CONFIG.PLACEMENT_PUBLIC_KEY
