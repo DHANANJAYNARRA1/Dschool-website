@@ -124,8 +124,7 @@ export async function uploadCVToCloudinary(file: File): Promise<string> {
     throw new Error(data.error?.message ?? `Cloudinary upload failed (${response.status})`);
   }
 
-  const rawUrl = data.secure_url as string;
-  return `https://docs.google.com/viewer?url=${encodeURIComponent(rawUrl)}`;
+  return data.secure_url as string;
 }
 
 // Step 2a ── Applicant gets a confirmation email
@@ -153,6 +152,11 @@ export async function sendPlacementUserEmail(data: PlacementEmailData) {
 export async function sendPlacementAdminEmail(
   data: PlacementEmailData & { cvLink: string; cvFilename: string }
 ) {
+  // direct Cloudinary URL — works as both view (PDF opens in browser) and download
+  const directUrl = data.cvLink;
+  // fl_attachment forces download in browsers that support it
+  const downloadUrl = directUrl.replace('/upload/', '/upload/fl_attachment/');
+
   return emailjs.send(
     EMAIL_CONFIG.PLACEMENT_SERVICE_ID,
     EMAIL_CONFIG.PLACEMENT_ADMIN_TEMPLATE_ID,
@@ -163,10 +167,11 @@ export async function sendPlacementAdminEmail(
       specialization:  data.specialization,
       submission_date: formatDate(),
       cv_filename:     data.cvFilename,
-      cv_link:         data.cvLink,
+      cv_link:         directUrl,
+      cv_download:     downloadUrl,
       reply_to:        data.email,
     },
-    EMAIL_CONFIG.PLACEMENT_PUBLIC_KEY   // ← key for the account that owns service_zsnwhem
+    EMAIL_CONFIG.PLACEMENT_PUBLIC_KEY
   );
 }
 
