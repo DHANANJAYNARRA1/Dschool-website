@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Target, Eye, BookOpen, LucideLinkedin, Mail, Star } from "lucide-react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import founderPhoto from "../../imports/WhatsApp_Image_2026-04-20_at_11.01.00_AM.jpeg";
 
 export default function AboutPage() {
@@ -168,7 +167,7 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
-            {/* Advisory Team */}
+            {/* Advisory Team - commented out
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -177,93 +176,9 @@ export default function AboutPage() {
               <h3 className="text-3xl font-bold mb-8 text-center" style={{ fontFamily: 'var(--font-display)' }}>
                 Advisory Team
               </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: "Dr. Priya Sharma",
-                    role: "Chief Medical Advisor",
-                    image: "https://images.unsplash.com/photo-1689600944138-da3b150d9cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Former Chief of Medicine at a leading multi-specialty hospital. Expertise in clinical excellence and patient safety protocols.",
-                    specialization: "Clinical Excellence"
-                  },
-                  {
-                    name: "Prof. Suresh Menon",
-                    role: "Academic Advisor",
-                    image: "https://images.unsplash.com/photo-1576558656222-ba66febe3dec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Dean of Nursing Sciences with 6+ years in academic leadership. Pioneered several innovative nursing education programs.",
-                    specialization: "Education & Training"
-                  },
-                  {
-                    name: "Ms. Anjali Reddy",
-                    role: "Industry Relations Advisor",
-                    image: "https://images.unsplash.com/photo-1655249481446-25d575f1c054?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Senior HR Director with extensive experience in healthcare talent development and organizational development.",
-                    specialization: "Career Development"
-                  },
-                  {
-                    name: "Dr. Vikram Singh",
-                    role: "Healthcare Technology Advisor",
-                    image: "https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Digital health innovator and consultant. Leading expert in healthcare digitalization and AI integration in medical practice.",
-                    specialization: "Digital Health"
-                  },
-                  {
-                    name: "Dr. Meera Joseph",
-                    role: "Quality & Accreditation Advisor",
-                    image: "https://images.unsplash.com/photo-1769636929388-99eff95d3bf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Specialist in healthcare quality management and accreditation. Former lead auditor for national healthcare standards.",
-                    specialization: "Quality Assurance"
-                  },
-                  {
-                    name: "Mr. Sanjay Patel",
-                    role: "Strategic Advisor",
-                    image: "https://images.unsplash.com/photo-1769636930047-4478f12cf430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-                    bio: "Business strategy consultant with focus on healthcare sector growth and partnerships. MBA from premier business school.",
-                    specialization: "Business Strategy"
-                  },
-                ].map((member, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-border group"
-                  >
-                    <div className="relative h-64 overflow-hidden bg-gradient-to-br from-primary/5 to-blue-50">
-                      <ImageWithFallback
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    <div className="p-6">
-                      <h4 className="text-xl font-bold mb-1" style={{ fontFamily: 'var(--font-display)' }}>
-                        {member.name}
-                      </h4>
-                      <p className="text-primary font-semibold mb-3">{member.role}</p>
-                      <div className="mb-3">
-                        <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">
-                          {member.specialization}
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {member.bio}
-                      </p>
-                      <div className="flex gap-2 mt-4">
-                        <button className="w-8 h-8 bg-primary/10 hover:bg-primary/20 rounded-full flex items-center justify-center transition-colors">
-                          <LucideLinkedin className="text-primary" size={16} />
-                        </button>
-                        <button className="w-8 h-8 bg-primary/10 hover:bg-primary/20 rounded-full flex items-center justify-center transition-colors">
-                          <Mail className="text-primary" size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              ...
             </motion.div>
+            */}
           </div>
 
           {/* Learning & Development Offerings */}

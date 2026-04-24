@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Quote, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import dschoolLogo from "../../imports/dschool_image.jpeg";
 
 // ─── Video player used inside video testimonial cards ─────────────────────────
 function VideoPlayer({ src, poster }: { src: string; poster?: string }) {
@@ -149,10 +150,7 @@ export default function Testimonials() {
                   <VideoPlayer src={testimonial.video} poster={testimonial.poster} />
                   <div className="bg-blue-900 px-4 py-2 flex items-center justify-between">
                     <span className="text-white text-sm font-semibold">Video Testimonial</span>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-sm transform rotate-45" />
-                      <span className="text-white text-xs">D School</span>
-                    </div>
+                    <img src={dschoolLogo} alt="D School" className="h-7 w-auto object-contain" />
                   </div>
                 </div>
               )}
@@ -174,10 +172,7 @@ export default function Testimonials() {
                   </div>
                   <div className="bg-blue-900 px-4 py-2 flex items-center justify-between">
                     <span className="text-white text-sm font-semibold">Success Story</span>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-sm transform rotate-45" />
-                      <span className="text-white text-xs">D School</span>
-                    </div>
+                    <img src={dschoolLogo} alt="D School" className="h-7 w-auto object-contain" />
                   </div>
                 </div>
               )}

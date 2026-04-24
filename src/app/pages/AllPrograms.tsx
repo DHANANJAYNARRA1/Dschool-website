@@ -1,13 +1,13 @@
 import { motion } from "motion/react";
 import { Link } from "react-router";
-import { useState } from "react";
+import { useState, ElementType } from "react";
 import {
   Monitor, Heart, Award, Languages, Lightbulb, GraduationCap,
-  Briefcase, ArrowRight, Crown, Stethoscope, HeartPulse, ClipboardList,
+  Briefcase, ArrowRight, Crown, Stethoscope, HeartPulse, ClipboardList, LayoutGrid,
 } from "lucide-react";
 
 export default function AllPrograms() {
-  const [activeCategory, setActiveCategory] = useState("nursing");
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const programCategories = [
     {
@@ -145,7 +145,7 @@ export default function AllPrograms() {
     },
   ];
 
-  const currentCategory = programCategories.find((c) => c.id === activeCategory)!;
+  const currentCategory = programCategories.find((c) => c.id === activeCategory);
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 bg-background">
@@ -186,6 +186,17 @@ export default function AllPrograms() {
       <div className="bg-white border-b border-slate-200 sticky top-16 md:top-24 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
           <div className="flex items-center gap-3 py-4 overflow-x-auto scrollbar-hide px-2">
+            <button
+              onClick={() => setActiveCategory("all")}
+              className={`flex items-center gap-2 px-7 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
+                activeCategory === "all"
+                  ? "bg-[#1E3A8A] text-white shadow-lg"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+              }`}
+            >
+              <LayoutGrid size={18} />
+              All
+            </button>
             {programCategories.map((category) => {
               const isActive = activeCategory === category.id;
               return (
@@ -207,97 +218,128 @@ export default function AllPrograms() {
         </div>
       </div>
 
-      {/* Active Category Programs */}
+      {/* Programs Content */}
       <motion.section
         key={activeCategory}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className={
-          activeCategory === "management"
-            ? "py-24 bg-gradient-to-br from-slate-50 to-blue-50"
-            : "py-24 bg-white"
-        }
+        className="py-24 bg-white"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Header */}
-          <div className="flex items-center gap-4 mb-12">
-            <div className={`w-16 h-16 ${currentCategory.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
-              <currentCategory.icon className={currentCategory.iconColor} size={32} />
-            </div>
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
-                {currentCategory.title}
-              </h2>
-              <p className="text-xl text-muted-foreground mt-2">{currentCategory.description}</p>
-            </div>
-          </div>
-
-          {/* Programs Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentCategory.programs.map((program, index) => (
-              <motion.div
-                key={program.slug}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 }}
-                className="group"
-              >
-                <Link to={`/programs/${program.slug}`}>
-                  <div
-                    className={`bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border ${
-                      program.featured
-                        ? "border-primary/50 ring-2 ring-primary/20"
-                        : "border-slate-200"
-                    } h-full flex flex-col group-hover:-translate-y-2 relative`}
-                  >
-                    {program.featured && (
-                      <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 rounded-full text-xs font-bold z-10">
-                        Featured
-                      </div>
-                    )}
-
-                    <div className={`bg-gradient-to-br ${currentCategory.color} p-8 text-white relative overflow-hidden`}>
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
-                      <div className="relative z-10">
-                        <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
-                          <program.icon size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                          {program.title}
-                        </h3>
-                        <div className="flex items-center gap-3 text-sm opacity-90">
-                          <span>⏱️ {program.duration}</span>
-                          <span>•</span>
-                          <span className="font-bold">{program.price}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-6 flex-1 flex flex-col">
-                      <p className="text-muted-foreground mb-4 leading-relaxed flex-1">
-                        {program.description}
-                      </p>
-
-                      <div className="space-y-3">
-                        <div className="text-sm text-muted-foreground">
-                          <span className="font-semibold text-foreground">Eligibility:</span>{" "}
-                          {program.eligibility}
-                        </div>
-
-                        <button className="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
-                          View Program Details
-                          <ArrowRight size={18} />
-                        </button>
-                      </div>
-                    </div>
+          {activeCategory === "all" ? (
+            programCategories.map((category, catIndex) => (
+              <div key={category.id} className={catIndex > 0 ? "mt-16" : ""}>
+                <div className="flex items-center gap-4 mb-12">
+                  <div className={`w-16 h-16 ${category.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
+                    <category.icon className={category.iconColor} size={32} />
                   </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
+                      {category.title}
+                    </h2>
+                    <p className="text-xl text-muted-foreground mt-2">{category.description}</p>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {category.programs.map((program, index) => (
+                    <ProgramCard key={program.slug} program={program} category={category} index={index} />
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : currentCategory ? (
+            <>
+              <div className="flex items-center gap-4 mb-12">
+                <div className={`w-16 h-16 ${currentCategory.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
+                  <currentCategory.icon className={currentCategory.iconColor} size={32} />
+                </div>
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
+                    {currentCategory.title}
+                  </h2>
+                  <p className="text-xl text-muted-foreground mt-2">{currentCategory.description}</p>
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentCategory.programs.map((program, index) => (
+                  <ProgramCard key={program.slug} program={program} category={currentCategory} index={index} />
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </motion.section>
     </div>
+  );
+}
+
+function ProgramCard({
+  program,
+  category,
+  index,
+}: {
+  program: { icon: ElementType; title: string; slug: string; duration: string; price: string; description: string; eligibility: string; featured: boolean };
+  category: { color: string };
+  index: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08 }}
+      className="group"
+    >
+      <Link to={`/programs/${program.slug}`}>
+        <div
+          className={`bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border ${
+            program.featured
+              ? "border-primary/50 ring-2 ring-primary/20"
+              : "border-slate-200"
+          } h-full flex flex-col group-hover:-translate-y-2 relative`}
+        >
+          {program.featured && (
+            <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 rounded-full text-xs font-bold z-10">
+              Featured
+            </div>
+          )}
+
+          <div className={`bg-gradient-to-br ${category.color} p-8 text-white relative overflow-hidden`}>
+            <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
+            <div className="relative z-10">
+              <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
+                <program.icon size={28} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
+                {program.title}
+              </h3>
+              <div className="flex items-center gap-3 text-sm opacity-90">
+                <span>⏱️ {program.duration}</span>
+                <span>•</span>
+                <span className="font-bold">{program.price}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 flex-1 flex flex-col">
+            <p className="text-muted-foreground mb-4 leading-relaxed flex-1">
+              {program.description}
+            </p>
+
+            <div className="space-y-3">
+              <div className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Eligibility:</span>{" "}
+                {program.eligibility}
+              </div>
+
+              <button className="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                View Program Details
+                <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
   );
 }

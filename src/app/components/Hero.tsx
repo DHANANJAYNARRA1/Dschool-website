@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const heroImages = [
-  "https://images.unsplash.com/photo-1758575514475-2a84975db58e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1643061754993-c8d79a3636d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1592392821486-71f028a00581?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-  "https://images.unsplash.com/photo-1736289162890-78f1ff4f8bd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+  "/assets/home/img1.jpeg",
+  "/assets/home/WhatsApp%20Image%202026-04-24%20at%2011.19.35%20PM.jpeg",
+  "/assets/home/WhatsApp%20Image%202026-04-24%20at%2011.19.36%20PM.jpeg",
 ];
 
 export default function Hero() {
