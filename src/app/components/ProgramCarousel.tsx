@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Link } from "react-router";
+import { useRef, useEffect } from "react";
 
 const programs = [
   { title: "LION Program", subtitle: "Nursing Leadership Bootcamp", slug: "lion", gradient: "from-[#D4AF37] via-[#B8941F] to-[#A68419]" },
@@ -14,6 +15,42 @@ const programs = [
 ];
 
 export default function ProgramCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef(0);
+  const pausedRef = useRef(false);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const tick = () => {
+      if (!pausedRef.current) {
+        posRef.current += 0.6;
+        // reset when one full set has scrolled past
+        const setWidth = track.scrollWidth / 2;
+        if (posRef.current >= setWidth) {
+          posRef.current = 0;
+        }
+        track.style.transform = `translateX(-${posRef.current}px)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    const pause = () => { pausedRef.current = true; };
+    const resume = () => { pausedRef.current = false; };
+    track.addEventListener("mouseenter", pause);
+    track.addEventListener("mouseleave", resume);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      track.removeEventListener("mouseenter", pause);
+      track.removeEventListener("mouseleave", resume);
+    };
+  }, []);
+
   return (
     <section className="py-16 md:py-24 bg-secondary overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 md:mb-12">
@@ -32,9 +69,10 @@ export default function ProgramCarousel() {
         </motion.div>
       </div>
 
-      {/* Infinite scrolling strip */}
+      {/* Scrolling strip */}
       <div className="relative overflow-hidden">
-        <div className="flex animate-scroll-left">
+        {/* 2 copies — JS resets position at exactly one set width */}
+        <div ref={trackRef} className="flex will-change-transform">
           {[...programs, ...programs].map((program, index) => (
             <Link
               key={index}
@@ -73,19 +111,6 @@ export default function ProgramCarousel() {
           </motion.button>
         </Link>
       </div>
-
-      <style>{`
-        @keyframes scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll-left {
-          animation: scroll-left 15s linear infinite;
-        }
-        .animate-scroll-left:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 }
