@@ -473,14 +473,22 @@ export default function Registration() {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Current Role</label>
-                <input
-                  type="text"
+                <select
                   name="currentRole"
                   value={formData.currentRole}
                   onChange={handleChange}
                   className={inputCls(false)}
-                  placeholder="e.g., Staff Nurse, Nursing Incharge"
-                />
+                >
+                  <option value="">Select current role</option>
+                  <option value="CNO - Chief Nursing Officer">CNO - Chief Nursing Officer</option>
+                  <option value="NS - Nursing Superintendent">NS - Nursing Superintendent</option>
+                  <option value="DNS - Deputy Nursing Superintendent">DNS - Deputy Nursing Superintendent</option>
+                  <option value="ANS - Assistant Nursing Superintendent">ANS - Assistant Nursing Superintendent</option>
+                  <option value="NS - Nursing Supervisor">NS - Nursing Supervisor</option>
+                  <option value="Nursing Incharge">Nursing Incharge</option>
+                  <option value="Senior Staff Nurse">Senior Staff Nurse</option>
+                  <option value="Junior Staff Nurse">Junior Staff Nurse</option>
+                </select>
               </div>
 
               <div className="md:col-span-2">

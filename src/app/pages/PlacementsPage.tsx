@@ -211,12 +211,27 @@ export default function PlacementsPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-2xl p-8 shadow-lg border border-border text-center hover:shadow-xl transition-all">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <feature.icon className="text-primary" size={32} />
+                className="relative rounded-2xl p-8 shadow-lg border border-border text-center hover:shadow-xl transition-all overflow-hidden">
+                {index === 0 && (
+                  <>
+                    <img
+                      src="/assets/placements.jpeg"
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover scale-110"
+                      style={{ filter: "blur(6px)" }}
+                    />
+                    <div className="absolute inset-0 bg-blue-900/75" />
+                  </>
+                )}
+                {index !== 0 && <div className="absolute inset-0 bg-card" />}
+                <div className="relative z-10">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 ${index === 0 ? "bg-white/20" : "bg-primary/10"}`}>
+                    <feature.icon className={index === 0 ? "text-white" : "text-primary"} size={32} />
+                  </div>
+                  <h3 className={`text-xl font-bold mb-3 ${index === 0 ? "text-white" : ""}`} style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h3>
+                  <p className={index === 0 ? "text-white/80" : "text-muted-foreground"}>{feature.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-3" style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
               </motion.div>
             ))}
           </div>
