@@ -80,7 +80,7 @@ export default function ProgramCarousel() {
           100% { transform: translateX(-33.333%); }
         }
         .animate-scroll-left {
-          animation: scroll-left 25s linear infinite;
+          animation: scroll-left 15s linear infinite;
         }
         .animate-scroll-left:hover {
           animation-play-state: paused;
