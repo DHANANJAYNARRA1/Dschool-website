@@ -1,12 +1,11 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import {
-  Users, Award, CheckCircle, Upload, Briefcase, GraduationCap,
-  MapPin, FileText, X, CheckCircle2, AlertCircle, Loader2,
+  Users, Award, CheckCircle, Briefcase, GraduationCap,
+  MapPin, Mail, CheckCircle2, AlertCircle, Loader2,
 } from "lucide-react";
 import {
   initEmailJS,
-  uploadCVToCloudinary,
   sendPlacementUserEmail,
   sendPlacementAdminEmail,
 } from "../services/emailService";
@@ -32,13 +31,7 @@ const SPECIALIZATIONS = [
   { value: "Pharmacy", label: "Pharmacy" },
 ];
 
-const ALLOWED_TYPES = [
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
-
-type Status = "idle" | "uploading" | "sending" | "success" | "error";
+type Status = "idle" | "step2" | "notifying" | "complete" | "error";
 
 type FieldErrors = {
   fullName?: string;
@@ -46,6 +39,23 @@ type FieldErrors = {
   phone?: string;
   specialization?: string;
 };
+
+function buildEmailUrl(userEmail: string, subject: string, body: string): string {
+  const domain = userEmail.split("@")[1]?.toLowerCase() ?? "";
+  const to  = "dschool@sims.healthcare";
+  const cc  = encodeURIComponent(userEmail);          // user gets a copy too
+  const sub = encodeURIComponent(subject);
+  const bdy = encodeURIComponent(body);
+
+  if (domain.includes("gmail"))
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&cc=${cc}&su=${sub}&body=${bdy}`;
+  if (domain.includes("yahoo"))
+    return `https://compose.mail.yahoo.com/?to=${to}&cc=${cc}&subject=${sub}&body=${bdy}`;
+  if (domain.includes("hotmail") || domain.includes("outlook") || domain.includes("live"))
+    return `https://outlook.live.com/owa/?path=/mail/action/compose&to=${to}&cc=${cc}&subject=${sub}&body=${bdy}`;
+  // fallback: device default mail app
+  return `mailto:${to}?cc=${cc}&subject=${sub}&body=${bdy}`;
+}
 
 function validatePlacement(fullName: string, email: string, phone: string, specialization: string): FieldErrors {
   const e: FieldErrors = {};
@@ -66,106 +76,47 @@ export default function PlacementsPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [specialization, setSpecialization] = useState("");
-  const [cvFile, setCvFile] = useState<File | null>(null);
-  const [fileError, setFileError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [dragOver, setDragOver] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [cvEmailUrl, setCvEmailUrl] = useState("");
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  function applyFile(file: File | undefined) {
-    if (!file) return;
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setFileError("Only PDF, DOC, or DOCX files are accepted.");
-      setCvFile(null);
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      setFileError("File must be smaller than 5 MB.");
-      setCvFile(null);
-      return;
-    }
-    setFileError("");
-    setCvFile(file);
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    applyFile(e.target.files?.[0]);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
+  // Step 1: validate form → go to step2 screen (no emails yet)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      applyFile(file);
-      if (fileInputRef.current) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        fileInputRef.current.files = dt.files;
-      }
-    }
-  };
-
-  const removeFile = () => {
-    setCvFile(null);
-    setFileError("");
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
     const errs = validatePlacement(fullName, email, phone, specialization);
-    if (Object.keys(errs).length > 0) {
-      setFieldErrors(errs);
-      return;
-    }
-    if (!cvFile) {
-      setFileError("Please upload your CV before submitting.");
-      return;
-    }
-
+    if (Object.keys(errs).length > 0) { setFieldErrors(errs); return; }
+    const subject = `CV Application – ${fullName} – ${specialization}`;
+    const body = `Dear D School Placement Team,\n\nPlease find my CV attached.\n\nName: ${fullName}\nPhone: ${phone}\nEmail: ${email}\nSpecialization: ${specialization}\n\nRegards,\n${fullName}`;
     setFieldErrors({});
     setErrorMsg("");
+    setCvEmailUrl(buildEmailUrl(email, subject, body));
+    setStatus("step2");
+  };
 
-    // Step 1 — upload CV to Cloudinary (permanent, free)
-    setStatus("uploading");
-    let cvLink = "";
-    try {
-      cvLink = await uploadCVToCloudinary(cvFile);
-    } catch (err) {
-      console.error("CV upload failed:", err);
-      setStatus("error");
-      setErrorMsg("CV upload failed. Please check your internet connection and try again.");
-      return;
-    }
-
-    // Step 2 — send both emails in parallel
-    setStatus("sending");
+  // Step 2: open user's email compose + fire EmailJS to both sides
+  const handleSendCV = async () => {
+    window.open(cvEmailUrl, "_blank");
+    setStatus("notifying");
     const [userResult, adminResult] = await Promise.allSettled([
       sendPlacementUserEmail({ fullName, email, phone, specialization }),
-      sendPlacementAdminEmail({ fullName, email, phone, specialization, cvLink, cvFilename: cvFile.name }),
+      sendPlacementAdminEmail({
+        fullName, email, phone, specialization,
+        cvLink: "CV sent by applicant directly to dschool@sims.healthcare",
+        cvFilename: "N/A",
+      }),
     ]);
-
     if (userResult.status === "rejected") console.error("User email failed:", userResult.reason);
     if (adminResult.status === "rejected") console.error("Admin email failed:", adminResult.reason);
-
     if (userResult.status === "fulfilled" || adminResult.status === "fulfilled") {
-      setStatus("success");
+      setStatus("complete");
     } else {
       setStatus("error");
-      setErrorMsg("Submission failed. Please try again or email us at dschool@sims.healthcare.");
+      setErrorMsg("Notification emails failed. Please try again or contact dschool@sims.healthcare.");
     }
   };
 
-  const isBusy = status === "uploading" || status === "sending";
-  const buttonLabel =
-    status === "uploading" ? "Uploading CV…" :
-    status === "sending"   ? "Sending Application…" :
-                             "Submit Application";
+  const isNotifying = status === "notifying";
 
   const features = [
     { icon: Users, title: "500+ Placements", description: "Successfully facilitated placements for radiographers, nurses, and doctors across leading healthcare institutions" },
@@ -275,42 +226,88 @@ export default function PlacementsPage() {
       <section className="py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <Upload className="mx-auto mb-6" size={64} />
-            <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>Upload Your CV</h2>
+            <Mail className="mx-auto mb-6 text-accent" size={64} />
+            <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>Submit Your Application</h2>
             <p className="text-xl opacity-90">Take the first step towards your rewarding healthcare career</p>
           </motion.div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-            {status === "success" ? (
-              /* ── Success ── */
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
-                <div className="w-24 h-24 bg-green-400/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 size={52} className="text-green-300" />
+            {status !== "idle" && status !== "error" ? (
+              /* ── Step 2 / Complete screen ── */
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="py-10">
+
+                {/* Step 1 — always done at this point */}
+                <div className="flex items-start gap-4 bg-green-400/10 border border-green-400/30 rounded-2xl p-5 mb-4">
+                  <div className="w-10 h-10 bg-green-400/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 size={22} className="text-green-300" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-bold text-green-300">Step 1 Complete — Form Submitted</p>
+                    <p className="text-sm opacity-80 mt-0.5">
+                      Details received. Confirmation emails to <strong>{email}</strong> and admin will be sent after Step 2.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>Application Submitted!</h3>
-                <p className="text-lg opacity-90 mb-2">Thank you for submitting your application to D School.</p>
-                <p className="opacity-75 mb-8">
-                  A confirmation has been sent to <strong>{email}</strong>. Our placement team will review your CV and reach out within 2–3 business days.
-                </p>
-                <div className="bg-white/10 rounded-2xl p-6 text-left max-w-md mx-auto mb-8">
-                  <p className="font-semibold mb-2">What happens next?</p>
-                  <ul className="space-y-2 text-sm opacity-90 list-disc list-inside">
-                    <li>Our team reviews your CV</li>
-                    <li>You'll receive a call for a brief screening</li>
-                    <li>We match you with suitable openings</li>
-                    <li>Interview preparation & placement support</li>
-                  </ul>
+
+                {/* Step 2 — send CV + trigger emails */}
+                <div className={`flex items-start gap-4 border-2 rounded-2xl p-5 mb-6 ${
+                  status === "complete"
+                    ? "bg-green-400/10 border-green-400/40"
+                    : "bg-accent/10 border-accent/50"
+                }`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                    status === "complete" ? "bg-green-400/20" : "bg-accent/20"
+                  }`}>
+                    {status === "complete"
+                      ? <CheckCircle2 size={22} className="text-green-300" />
+                      : <Mail size={20} className="text-accent" />
+                    }
+                  </div>
+                  <div className="text-left flex-1">
+                    {status === "complete" ? (
+                      <>
+                        <p className="font-bold text-green-300">Step 2 Complete — CV Sent &amp; Emails Delivered</p>
+                        <p className="text-sm opacity-80 mt-1">
+                          Confirmation emails have been sent to <strong>{email}</strong> and the admin. Your CV email is on its way to <span className="text-accent font-semibold">dschool@sims.healthcare</span>.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="font-bold text-accent">Step 2 — Send Your CV &amp; Trigger Notifications</p>
+                        <p className="text-sm opacity-80 mt-1 mb-1">
+                          Click below to open <strong>your email app</strong> pre-addressed to:
+                        </p>
+                        <p className="font-mono text-accent font-bold text-sm mb-2">dschool@sims.healthcare</p>
+                        <p className="text-xs opacity-70 mb-4">
+                          Attach your CV (PDF preferred) and click <strong>Send</strong>. This also triggers confirmation emails to both <strong>you</strong> and the <strong>admin</strong>.
+                        </p>
+                        <button
+                          onClick={handleSendCV}
+                          disabled={isNotifying}
+                          className="inline-flex items-center gap-2 bg-accent text-primary px-6 py-3 rounded-full font-bold text-sm hover:bg-accent/90 transition-all shadow-lg disabled:opacity-60"
+                        >
+                          {isNotifying
+                            ? <><Loader2 size={16} className="animate-spin" /> Sending Notifications…</>
+                            : <><Mail size={16} /> Open My Email &amp; Send CV to Admin</>
+                          }
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <button
-                  onClick={() => {
-                    setStatus("idle");
-                    setFullName(""); setEmail(""); setPhone(""); setSpecialization("");
-                    setCvFile(null); setFileError(""); setErrorMsg(""); setFieldErrors({});
-                  }}
-                  className="px-8 py-3 rounded-full bg-white/20 hover:bg-white/30 font-semibold transition-all"
-                >
-                  Submit Another Application
-                </button>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      setStatus("idle");
+                      setFullName(""); setEmail(""); setPhone(""); setSpecialization("");
+                      setErrorMsg(""); setFieldErrors({});
+                    }}
+                    className="px-6 py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-sm font-semibold transition-all"
+                  >
+                    Submit Another Application
+                  </button>
+                </div>
               </motion.div>
             ) : (
               /* ── Form ── */
@@ -378,51 +375,14 @@ export default function PlacementsPage() {
                     )}
                   </div>
 
-                  {/* CV Upload */}
-                  <div>
-                    <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileChange} />
-
-                    {cvFile ? (
-                      <div className="flex items-center gap-3 p-4 rounded-lg bg-white/10 border border-white/30">
-                        <FileText size={24} className="text-green-300 flex-shrink-0" />
-                        <span className="flex-1 text-sm truncate">{cvFile.name}</span>
-                        <span className="text-xs opacity-60 flex-shrink-0">
-                          {(cvFile.size / 1024 / 1024).toFixed(2)} MB
-                        </span>
-                        <button type="button" onClick={removeFile} className="text-white/60 hover:text-white transition-colors flex-shrink-0">
-                          <X size={18} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                        onDragLeave={() => setDragOver(false)}
-                        onDrop={handleDrop}
-                        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${
-                          dragOver ? "border-white bg-white/20" : "border-white/30 hover:border-white/60 hover:bg-white/10"
-                        }`}
-                      >
-                        <Upload className="mx-auto mb-2 opacity-80" size={32} />
-                        <p className="font-semibold">Click or drag to upload your CV</p>
-                        <p className="text-sm opacity-70 mt-1">PDF, DOC, DOCX — Max 5 MB</p>
-                      </div>
-                    )}
-
-                    {fileError && (
-                      <p className="mt-2 text-red-300 text-sm flex items-center gap-1">
-                        <AlertCircle size={14} /> {fileError}
-                      </p>
-                    )}
+                  {/* CV note */}
+                  <div className="flex items-start gap-3 bg-white/5 border border-white/15 rounded-xl px-4 py-3">
+                    <Mail size={16} className="text-accent flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-white/70">
+                      After submitting, you'll get a button to open <strong className="text-white">your own email</strong> and send your CV to{" "}
+                      <span className="text-accent font-semibold">dschool@sims.healthcare</span>.
+                    </p>
                   </div>
-
-                  {/* Progress hint while busy */}
-                  {isBusy && (
-                    <div className="flex items-center gap-2 text-sm opacity-80">
-                      <Loader2 size={16} className="animate-spin" />
-                      {status === "uploading" ? "Uploading your CV securely…" : "Sending your application…"}
-                    </div>
-                  )}
 
                   {status === "error" && (
                     <p className="text-red-300 text-sm flex items-center gap-2">
@@ -432,13 +392,11 @@ export default function PlacementsPage() {
 
                   <motion.button
                     type="submit"
-                    disabled={isBusy}
-                    whileHover={{ scale: isBusy ? 1 : 1.02 }}
-                    whileTap={{ scale: isBusy ? 1 : 0.98 }}
-                    className="w-full bg-white text-blue-900 px-6 py-4 rounded-lg hover:bg-white/90 transition-all font-bold text-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full bg-white text-blue-900 px-6 py-4 rounded-lg hover:bg-white/90 transition-all font-bold text-lg flex items-center justify-center gap-2"
                   >
-                    {isBusy && <Loader2 size={20} className="animate-spin" />}
-                    {buttonLabel}
+                    Submit Application
                   </motion.button>
                 </div>
               </form>
