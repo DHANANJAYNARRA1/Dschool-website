@@ -35,7 +35,7 @@ export default function ProgramCarousel() {
       {/* Infinite scrolling strip */}
       <div className="relative overflow-hidden">
         <div className="flex animate-scroll-left">
-          {[...programs, ...programs, ...programs].map((program, index) => (
+          {[...programs, ...programs].map((program, index) => (
             <Link
               key={index}
               to={`/programs/${program.slug}`}
@@ -77,7 +77,7 @@ export default function ProgramCarousel() {
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); }
+          100% { transform: translateX(-50%); }
         }
         .animate-scroll-left {
           animation: scroll-left 15s linear infinite;
