@@ -148,7 +148,7 @@ export default function AllPrograms() {
   const currentCategory = programCategories.find((c) => c.id === activeCategory)!;
 
   return (
-    <div className="min-h-screen pt-20 bg-background">
+    <div className="min-h-screen pt-16 md:pt-24 bg-background">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#1E3A8A] via-[#172F6E] to-[#0F1E4A] text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,9 +183,9 @@ export default function AllPrograms() {
       </section>
 
       {/* Horizontal Category Tab Bar */}
-      <div className="bg-white border-b border-slate-200 sticky top-20 z-40 shadow-sm">
+      <div className="bg-white border-b border-slate-200 sticky top-16 md:top-24 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-          <div className="flex items-center justify-center gap-4 py-5">
+          <div className="flex items-center gap-3 py-4 overflow-x-auto scrollbar-hide px-2">
             {programCategories.map((category) => {
               const isActive = activeCategory === category.id;
               return (
