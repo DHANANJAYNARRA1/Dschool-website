@@ -74,7 +74,7 @@ const testimonials = [
     quote: "The Nurse 360 program offered a well-rounded learning experience, strengthening both my clinical understanding and professional development.",
     author: "Sanjay Patel",
     role: "Fresher Nurse",
-    image: "/assets/nurse360_cropped.jpeg",
+    image: "/assets/nurse360.jpeg",
     video: null,
     type: "image" as const,
   },
