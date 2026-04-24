@@ -102,11 +102,15 @@ export interface PlacementEmailData {
 }
 
 export async function uploadCVToCloudinary(file: File): Promise<string> {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'pdf';
+  const baseName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '');
+  const publicId = `cv_${Date.now()}_${baseName}`;   // no extension — Cloudinary appends it
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', EMAIL_CONFIG.CLOUDINARY_UPLOAD_PRESET);
-  formData.append('use_filename', 'true');
-  formData.append('unique_filename', 'true');
+  formData.append('public_id', publicId);
+  formData.append('filename_override', `${baseName}.${ext}`);
 
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${EMAIL_CONFIG.CLOUDINARY_CLOUD_NAME}/raw/upload`,
