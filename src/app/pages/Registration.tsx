@@ -428,14 +428,25 @@ export default function Registration() {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Specialization</label>
-                <input
-                  type="text"
+                <select
                   name="specialization"
                   value={formData.specialization}
                   onChange={handleChange}
                   className={inputCls(false)}
-                  placeholder="e.g., Critical Care, Pediatrics"
-                />
+                >
+                  <option value="">Select specialization</option>
+                  <option value="ICU - Intensive Care Unit">ICU - Intensive Care Unit</option>
+                  <option value="Emergency/Trauma Care">Emergency/Trauma Care</option>
+                  <option value="NICU - Neonatal Intensive Care Unit">NICU - Neonatal Intensive Care Unit</option>
+                  <option value="PICU - Pediatric Intensive Care Unit">PICU - Pediatric Intensive Care Unit</option>
+                  <option value="Oncology">Oncology</option>
+                  <option value="Orthopedic">Orthopedic</option>
+                  <option value="Gynaecology">Gynaecology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Nephrology">Nephrology</option>
+                  <option value="Psychiatric">Psychiatric</option>
+                  <option value="Geriatric Nursing">Geriatric Nursing</option>
+                </select>
               </div>
 
               <div>
