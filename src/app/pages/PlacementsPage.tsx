@@ -29,6 +29,8 @@ const SPECIALIZATIONS = [
   { value: "Pediatrics", label: "Pediatrics" },
   { value: "Operation Theatre", label: "Operation Theatre" },
   { value: "Pharmacy", label: "Pharmacy" },
+  { value: "MBBS", label: "MBBS" },
+  { value: "MRCEM", label: "MRCEM" },
 ];
 
 type Status = "idle" | "step2" | "notifying" | "complete" | "error";
