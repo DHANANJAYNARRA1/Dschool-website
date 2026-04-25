@@ -379,7 +379,7 @@ export default function PlacementsPage() {
                   <div className="flex items-start gap-3 bg-white/5 border border-white/15 rounded-xl px-4 py-3">
                     <Mail size={16} className="text-accent flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-white/70">
-                      Kindly Share Your resume to{" "}
+                      Kindly Share yours resume to{" "}
                       <span className="text-accent font-semibold">dschool@sims.healthcare</span>.<strong>Our Team will get back to you soon.</strong><br />
                     </p>
                   </div>

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const heroImages = [
-  "/assets/home/img1.jpeg",
+ // "assets/DHR Programs/img2.jpeg",
   "/assets/home/WhatsApp%20Image%202026-04-24%20at%2011.19.35%20PM.jpeg",
   "/assets/home/WhatsApp%20Image%202026-04-24%20at%2011.19.36%20PM.jpeg",
 ];

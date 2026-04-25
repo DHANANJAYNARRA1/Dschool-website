@@ -67,7 +67,7 @@ const GALLERY_ITEMS = [
 
   // ── DHR Program ────────────────────────────────────────────────────────────
   { id: 39, category: "DHR Program",  title: "Digital Health Revolution 1.0",    date: "February 2026",  image: "/assets/DHR Programs/img1.jpeg", imgPosition: "center 30%" },
-  { id: 40, category: "DHR Program",  title: "AI Tools Hands-On Session",        date: "February 2026",  image: "/assets/DHR Programs/img2.jpeg" },
+  { id: 40, category: "DHR Program",  title: "AI Tools Hands-On Session",        date: "February 2026",  image: "/assets/DHR Programs/img2.jpeg", imgFit: "contain" },
   { id: 41, category: "DHR Program",  title: "DHR Graduation Ceremony",          date: "March 2026",     image: "/assets/DHR Programs/img3.jpeg" },
   { id: 42, category: "DHR Program",  title: "Data Analytics Workshop",          date: "January 2026",   image: "/assets/DHR Programs/img4.jpeg" },
   { id: 43, category: "DHR Program",  title: "Digital Health Expo",              date: "January 2026",   image: "/assets/DHR Programs/img5.jpeg" },
@@ -257,7 +257,7 @@ export default function GalleryPage() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className={`w-full h-full ${'imgFit' in item && item.imgFit === 'contain' ? 'object-contain' : 'object-cover'}`}
                       style={'imgPosition' in item && item.imgPosition ? { objectPosition: item.imgPosition as string } : undefined}
                       loading="lazy"
                     />
