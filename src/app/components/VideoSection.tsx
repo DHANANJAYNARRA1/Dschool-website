@@ -7,19 +7,22 @@ const videos = [
     src: "/assets/video/DJI_compressed.mp4",
     title: "D School in Action",
     subtitle: "Campus & Training Facilities",
+    objectPosition: "center center",
   },
   {
-    src: "/assets/video/video_20250315_compressed.mp4",
+    src: "/assets/video/digital video.mp4",
     title: "Healthcare Excellence",
     subtitle: "Our Programs & Community",
+    objectPosition: "50% 85%",
   },
 ];
 
-function VideoPlayer({ src, title, subtitle, delay }: {
+function VideoPlayer({ src, title, subtitle, delay, objectPosition }: {
   src: string;
   title: string;
   subtitle: string;
   delay: number;
+  objectPosition?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -54,6 +57,7 @@ function VideoPlayer({ src, title, subtitle, delay }: {
         loop
         playsInline
         className="w-full aspect-video object-cover"
+        style={{ objectPosition: objectPosition ?? "center center" }}
         onEnded={() => setPlaying(false)}
       />
 

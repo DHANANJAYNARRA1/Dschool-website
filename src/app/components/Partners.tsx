@@ -1,20 +1,15 @@
 import { motion } from "motion/react";
-import simsLogo from "../../imports/logos/sims.jpg";
-import med360Logo from "../../imports/logos/med360.jpg";
 import asciLogo from "../../imports/logos/asci.jpg";
 import ozoneLogo from "../../imports/logos/ozone.jpg";
 
 export default function Partners() {
   const partners = [
-    { name: "SIMS Healthcare", tagline: "Sims Healthcare Private Limited", img: simsLogo },
-    { name: "Med 360", tagline: "Healthcare Solutions", img: med360Logo },
+    { name: "AHA", tagline: "American Heart Association", img: "/assets/aha logo.jpeg" },
     { name: "ASCI", tagline: "Premier Institute", img: asciLogo },
     { name: "Ozone Hospitals", tagline: "Multi-Specialty Hospital", img: ozoneLogo },
   ];
 
   const certifications = [
-    { title: "ISO Certified", subtitle: "Quality Standards" },
-    { title: "ASCI Accredited", subtitle: "Premium Education" },
     { title: "Industry Recognized", subtitle: "Professional Excellence" },
   ];
 
@@ -36,7 +31,7 @@ export default function Partners() {
         </motion.div>
 
         {/* Certifications */}
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
+        <div className="grid md:grid-cols-1 max-w-sm mx-auto gap-6 mb-16">
           {certifications.map((cert, index) => (
             <motion.div
               key={index}
@@ -60,7 +55,7 @@ export default function Partners() {
         </div>
 
         {/* Partners */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {partners.map((partner, index) => (
             <motion.div
               key={index}

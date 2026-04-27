@@ -6,12 +6,12 @@ export default function WhyChooseUs() {
   const features = [
     {
       icon: GraduationCap,
-      title: "ASCI Partnership",
+      title: "Institution Partnership",
       description: "All programs delivered in association with Administrative Staff College of India, ensuring world-class education standards and recognized certification.",
     },
     {
       icon: Users2,
-      title: "Expert Faculty",
+      title: "Expert Industry Faculty",
       description: "Learn from seasoned healthcare professionals and industry leaders with 6+ years of combined clinical and administrative experience.",
     },
     {

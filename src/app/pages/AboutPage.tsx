@@ -99,7 +99,7 @@ export default function AboutPage() {
               className="text-center mb-12"
             >
               <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-                Meet Our <span className="text-primary">Leadership Team</span>
+                Meet Our <span className="text-primary">Think Tank</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                 Driven by passion, guided by experience, and committed to transforming healthcare education
@@ -113,9 +113,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <h3 className="text-3xl font-bold mb-8 text-center" style={{ fontFamily: 'var(--font-display)' }}>
-                Founder
-              </h3>
+             
               <div className="max-w-4xl mx-auto">
                 <div className="bg-gradient-to-br from-blue-50 to-slate-50 rounded-3xl p-12 shadow-xl border border-blue-100">
                   <div className="flex flex-col md:flex-row gap-8 items-center">
@@ -359,7 +357,7 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
                 {
-                  number: "6+",
+                  number: "50+",
                   label: "Years Combined Experience",
                 },
                 {

@@ -5,7 +5,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import dschoolLogo from "../../imports/dschool_image.jpeg";
 
 // ─── Video player used inside video testimonial cards ─────────────────────────
-function VideoPlayer({ src, poster }: { src: string; poster?: string }) {
+function VideoPlayer({ src, poster, objectPosition }: { src: string; poster?: string; objectPosition?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -34,6 +34,7 @@ function VideoPlayer({ src, poster }: { src: string; poster?: string }) {
         playsInline
         {...(poster ? { poster } : {})}
         className="w-full h-full object-cover"
+        style={{ objectPosition: objectPosition ?? "center center" }}
         onEnded={() => setPlaying(false)}
       />
 
@@ -93,8 +94,9 @@ const testimonials = [
     author: "Rajesh Kumar",
     role: "Digital Health Specialist",
     image: null,
-    video: "/assets/video/video_20250315_compressed.mp4",
+    video: "/assets/video/digital video.mp4",
     poster: "/assets/thumbnail.jpeg",
+    objectPosition: "10% 10%",
     type: "video" as const,
   },
   {
@@ -146,13 +148,30 @@ export default function Testimonials() {
             >
               {/* Video testimonial */}
               {testimonial.type === "video" && testimonial.video && (
-                <div className="border-8 border-blue-900 rounded-t-2xl overflow-hidden">
-                  <VideoPlayer src={testimonial.video} poster={testimonial.poster} />
-                  <div className="bg-blue-900 px-4 py-2 flex items-center justify-between">
-                    <span className="text-white text-sm font-semibold">Video Testimonial</span>
-                    <img src={dschoolLogo} alt="D School" className="h-7 w-auto object-contain" />
+                <>
+                  <div className="border-8 border-blue-900 rounded-t-2xl overflow-hidden">
+                    <VideoPlayer src={testimonial.video} poster={testimonial.poster} objectPosition={(testimonial as any).objectPosition} />
+                    <div className="bg-blue-900 px-4 py-2 flex items-center justify-end">
+                      <img src={dschoolLogo} alt="D School" className="h-7 w-auto object-contain" />
+                    </div>
                   </div>
-                </div>
+                  <div className="p-8">
+                    <p className="text-lg text-foreground mb-6 leading-relaxed italic">
+                      "{testimonial.quote}"
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-yellow-500">
+                        <span className="text-white font-bold text-lg">
+                          {testimonial.author.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-foreground text-lg">{testimonial.author}</p>
+                        <p className="text-sm text-blue-700 font-semibold">{testimonial.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
 
               {/* Image testimonial */}
@@ -177,33 +196,35 @@ export default function Testimonials() {
                 </div>
               )}
 
-              {/* Quote content */}
-              <div className={`p-8 relative ${testimonial.type === "text" ? "border-t-8 border-blue-900" : ""}`}>
-                {testimonial.type === "text" && (
-                  <>
-                    <Quote className="text-blue-900/20 absolute top-6 right-6" size={64} />
-                    <div className="absolute top-0 right-8 w-12 h-12 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-sm transform rotate-45 -translate-y-6" />
-                  </>
-                )}
+              {/* Quote content — hidden for video cards */}
+              {testimonial.type !== "video" && (
+                <div className={`p-8 relative ${testimonial.type === "text" ? "border-t-8 border-blue-900" : ""}`}>
+                  {testimonial.type === "text" && (
+                    <>
+                      <Quote className="text-blue-900/20 absolute top-6 right-6" size={64} />
+                      <div className="absolute top-0 right-8 w-12 h-12 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-sm transform rotate-45 -translate-y-6" />
+                    </>
+                  )}
 
-                <div className="relative z-10">
-                  <p className="text-lg text-foreground mb-6 leading-relaxed italic">
-                    "{testimonial.quote}"
-                  </p>
+                  <div className="relative z-10">
+                    <p className="text-lg text-foreground mb-6 leading-relaxed italic">
+                      "{testimonial.quote}"
+                    </p>
 
-                  <div className="border-t-2 border-blue-900 pt-4 flex items-center gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-yellow-500">
-                      <span className="text-white font-bold text-lg">
-                        {testimonial.author.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-bold text-foreground text-lg">{testimonial.author}</p>
-                      <p className="text-sm text-blue-700 font-semibold">{testimonial.role}</p>
+                    <div className="border-t-2 border-blue-900 pt-4 flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-yellow-500">
+                        <span className="text-white font-bold text-lg">
+                          {testimonial.author.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-foreground text-lg">{testimonial.author}</p>
+                        <p className="text-sm text-blue-700 font-semibold">{testimonial.role}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </motion.div>
           ))}
         </div>

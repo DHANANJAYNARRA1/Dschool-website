@@ -14,7 +14,7 @@ export default function ValueProposition() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-              Bridging the Gap Between <span className="text-primary">Education</span> and <span className="text-primary">Excellence</span>
+              Bridging the Gap Between <span className="text-primary">Qualified</span> and <span className="text-primary">Competency</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               The healthcare industry is evolving at an unprecedented pace. D School was founded to address
@@ -22,7 +22,7 @@ export default function ValueProposition() {
             </p>
             <div className="space-y-4 mb-8">
               {[
-                "Transform from qualified to competent expert",
+                "Transform from qualified to competent professional",
                 "Gain practical skills for real-world challenges",
                 "Access global career opportunities",
                 "Learn from industry-leading professionals",
@@ -61,7 +61,7 @@ export default function ValueProposition() {
           >
             {[
               {
-                number: "6+",
+                number: "50+",
                 label: "Years of Excellence",
                 sublabel: "Industry experience",
               },
