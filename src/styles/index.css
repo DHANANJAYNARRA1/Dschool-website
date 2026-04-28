@@ -1,3 +1,46 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+@keyframes verticalScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.animate-vertical-scroll {
+  animation: verticalScroll 20s linear infinite;
+}
+
+.animate-vertical-scroll:hover {
+  animation-play-state: paused;
+}
+
+.animate-vertical-scroll-smooth {
+  animation: verticalScroll 25s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.animate-vertical-scroll {
+  animation: verticalScroll 20s linear infinite;
+}
+
+.animate-vertical-scroll:hover {
+  animation-play-state: paused;
+}

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { Quote, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Quote, Play, Pause, Volume2, VolumeX, X } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import dschoolLogo from "../../imports/dschool_image.jpeg";
 
@@ -62,6 +62,114 @@ function VideoPlayer({ src, poster, objectPosition }: { src: string; poster?: st
   );
 }
 
+// ─── Modal for expanded video card ───────────────────────────────────────────
+function VideoModal({ testimonial, onClose }: { testimonial: any; onClose: () => void; }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+
+  function togglePlay() {
+    const v = ref.current;
+    if (!v) return;
+    if (v.paused) { v.play(); setPlaying(true); }
+    else { v.pause(); setPlaying(false); }
+  }
+
+  function toggleMute() {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden shadow-2xl"
+      >
+        {/* Video */}
+        <div className="relative">
+          <video
+            ref={ref}
+            src={testimonial.video}
+            muted
+            loop
+            playsInline
+            poster={testimonial.poster}
+            className="w-full aspect-video object-cover"
+            style={{ objectPosition: testimonial.objectPosition ?? "center center" }}
+            onEnded={() => setPlaying(false)}
+          />
+
+          {/* Controls overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              onClick={togglePlay}
+              className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+              aria-label={playing ? "Pause" : "Play"}
+            >
+              {playing ? <Pause size={32} fill="white" /> : <Play size={32} fill="white" className="ml-1" />}
+            </button>
+          </div>
+
+          {/* Mute toggle */}
+          <button
+            onClick={toggleMute}
+            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-all"
+            aria-label={muted ? "Unmute" : "Mute"}
+          >
+            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
+
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-all"
+            aria-label="Close"
+          >
+            <X size={18} />
+          </button>
+
+          {/* D School logo footer */}
+          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-blue-900/90 to-transparent">
+            <div className="flex items-center justify-end">
+              <img src={dschoolLogo} alt="D School" className="h-7 w-auto object-contain" />
+            </div>
+          </div>
+        </div>
+
+        {/* Quote and author section - mimicking the card style */}
+        <div className="bg-white p-8">
+          <p className="text-lg text-slate-800 mb-6 leading-relaxed italic">
+            "{testimonial.quote}"
+          </p>
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-yellow-500">
+              <span className="text-white font-bold text-lg">
+                {testimonial.author.charAt(0)}
+              </span>
+            </div>
+            <div>
+              <p className="font-bold text-slate-800 text-lg">{testimonial.author}</p>
+              <p className="text-sm text-blue-700 font-semibold">{testimonial.role}</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ─── Testimonial data ─────────────────────────────────────────────────────────
 const testimonials = [
   {
@@ -96,7 +204,7 @@ const testimonials = [
     image: null,
     video: "/assets/video/digital video.mp4",
     poster: "/assets/thumbnail.jpeg",
-    objectPosition: "10% 10%",
+    objectPosition: "20% 20%",
     type: "video" as const,
   },
   {
@@ -119,6 +227,8 @@ const testimonials = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Testimonials() {
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+
   return (
     <section className="py-24 bg-gradient-to-br from-primary/5 to-accent/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -148,7 +258,11 @@ export default function Testimonials() {
             >
               {/* Video testimonial */}
               {testimonial.type === "video" && testimonial.video && (
-                <>
+                <button
+                  type="button"
+                  onClick={() => setSelectedVideo(testimonial)}
+                  className="w-full text-left"
+                >
                   <div className="border-8 border-blue-900 rounded-t-2xl overflow-hidden">
                     <VideoPlayer src={testimonial.video} poster={testimonial.poster} objectPosition={(testimonial as any).objectPosition} />
                     <div className="bg-blue-900 px-4 py-2 flex items-center justify-end">
@@ -171,7 +285,7 @@ export default function Testimonials() {
                       </div>
                     </div>
                   </div>
-                </>
+                </button>
               )}
 
               {/* Image testimonial */}
@@ -229,6 +343,14 @@ export default function Testimonials() {
           ))}
         </div>
       </div>
+
+      {/* Video modal */}
+      {selectedVideo && (
+        <VideoModal
+          testimonial={selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+        />
+      )}
     </section>
   );
 }
