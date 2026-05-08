@@ -103,37 +103,56 @@ export default function Hero() {
       <div className="hidden md:flex min-h-screen">
 
         {/* Left: blue gradient panel with text */}
-        <div className="w-1/2 relative bg-gradient-to-br from-primary via-blue-800 to-blue-900 flex items-center">
+        <div className="w-1/2 relative bg-gradient-to-br from-primary via-blue-800 to-blue-900 flex items-end">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-primary/50" />
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             <div className="absolute top-20 left-20 w-96 h-96 bg-accent rounded-full blur-3xl" />
             <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-300 rounded-full blur-3xl" />
           </div>
-          <div className="relative z-10 px-8 lg:px-16 py-24 max-w-xl">
+          <div className="relative z-10 pl-6 pr-8 lg:pl-10 lg:pr-12 pb-3 pt-0 max-w-xl">
             {content}
           </div>
         </div>
 
-        {/* Right: full image, no crop — width fills panel, height is natural */}
-        <div className="w-1/2 relative bg-gradient-to-br from-blue-900 via-blue-950 to-blue-900 flex items-center justify-center overflow-hidden">
-          {heroImages.map((image, index) => (
-            <motion.div
-              key={index}
-              initial={false}
-              animate={{ opacity: index === currentImage ? 1 : 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <ImageWithFallback
-                src={image}
-                alt="Healthcare professionals"
-                className="w-full h-auto block"
-              />
-            </motion.div>
-          ))}
-          {/* Smooth gradient fades so image blends into the panel — no hard "card" edge */}
-          <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-blue-900 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-blue-900 to-transparent z-10 pointer-events-none" />
+        {/* Right: full image panel */}
+        <div className="w-1/2 relative overflow-hidden">
+          {/* design 1 */}
+          <motion.div
+            initial={false}
+            animate={{ opacity: currentImage === 0 ? 1 : 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <ImageWithFallback
+              src={heroImages[0]}
+              alt="Healthcare professionals"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center center" }}
+            />
+          </motion.div>
+          {/* design 2 */}
+          <motion.div
+            initial={false}
+            animate={{ opacity: currentImage === 1 ? 1 : 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            style={{ position: "absolute", inset: 0, overflow: "hidden" }}
+          >
+            <img
+              src={heroImages[1]}
+              alt="Healthcare professionals"
+              style={{
+                position: "absolute",
+                top: "96px",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: "100%",
+                height: "calc(100% - 96px)",
+                objectFit: "cover",
+                objectPosition: "center top",
+              }}
+            />
+          </motion.div>
           <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-blue-900 to-transparent z-10 pointer-events-none" />
         </div>
       </div>
