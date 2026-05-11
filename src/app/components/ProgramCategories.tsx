@@ -21,7 +21,7 @@ const categories = [
   },
   {
     icon: Briefcase,
-    title: "Management Programs",
+    title: "Management Development programs",
     description: "Leadership and administration excellence",
     programs: [
       { title: "Hospital Manager Programs", slug: "hospital-manager", duration: "6-12 Months", price: "₹75,000" },

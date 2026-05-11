@@ -33,7 +33,7 @@ export default function Hero() {
         style={{ fontFamily: "var(--font-display)" }}
       >
         A School for{" "}
-        <span className="text-accent">Healthcare Professionals</span>
+        <span className="text-accent">Professionals</span>
       </motion.h1>
 
       <motion.p
@@ -42,7 +42,7 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.5 }}
         className="text-base sm:text-xl text-white/90 mb-6 md:mb-8 leading-relaxed drop-shadow-md"
       >
-        Transforming qualified healthcare professionals into competent,
+        Transforming qualified professionals into competent,
         job-ready experts through structured training and global career
         pathways.
       </motion.p>
