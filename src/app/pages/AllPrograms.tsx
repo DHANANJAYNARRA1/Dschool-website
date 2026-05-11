@@ -84,7 +84,7 @@ export default function AllPrograms() {
     {
       id: "management",
       icon: Briefcase,
-      title: "Management Programs",
+      title: "Management Development Programs",
       description: "Executive leadership and healthcare administration programs for senior professionals",
       color: "from-[#D4AF37] to-[#B8941F]",
       iconBg: "bg-[#1E3A8A]/10",
