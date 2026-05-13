@@ -15,9 +15,18 @@ import LeadershipProgram from "./pages/programs/LeadershipProgram";
 import HospitalManagerProgram from "./pages/programs/HospitalManagerProgram";
 import DrTomorrowProgram from "./pages/programs/DrTomorrowProgram";
 
+// Workshop Pages
+import PatientCareWorkshop from "./pages/workshops/PatientCareWorkshop";
+import LeadershipManagementWorkshop from "./pages/workshops/LeadershipManagementWorkshop";
+import DigitalHealthWorkshop from "./pages/workshops/DigitalHealthWorkshop";
+import InfectionControlWorkshop from "./pages/workshops/InfectionControlWorkshop";
+import MentalHealthWorkshop from "./pages/workshops/MentalHealthWorkshop";
+import EvidenceBasedWorkshop from "./pages/workshops/EvidenceBasedWorkshop";
+
 // Other Pages
 import AboutPage from "./pages/AboutPage";
 import AllPrograms from "./pages/AllPrograms";
+import WorkshopsPage from "./pages/WorkshopsPage";
 import PlacementsPage from "./pages/PlacementsPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactPage from "./pages/ContactPage";
@@ -35,6 +44,7 @@ export const router = createBrowserRouter([
       // Main Pages
       { path: "about", Component: AboutPage },
       { path: "programs", Component: AllPrograms },
+      { path: "workshops", Component: WorkshopsPage },
       { path: "placements", Component: PlacementsPage },
       { path: "gallery", Component: GalleryPage },
       { path: "contact", Component: ContactPage },
@@ -50,6 +60,14 @@ export const router = createBrowserRouter([
       { path: "programs/leadership-integrated", Component: LeadershipProgram },
       { path: "programs/hospital-manager", Component: HospitalManagerProgram },
       { path: "programs/dr-tomorrow", Component: DrTomorrowProgram },
+
+      // Workshop Detail Pages
+      { path: "workshops/patient-care", Component: PatientCareWorkshop },
+      { path: "workshops/leadership-management", Component: LeadershipManagementWorkshop },
+      { path: "workshops/digital-health", Component: DigitalHealthWorkshop },
+      { path: "workshops/infection-control", Component: InfectionControlWorkshop },
+      { path: "workshops/mental-health", Component: MentalHealthWorkshop },
+      { path: "workshops/evidence-based", Component: EvidenceBasedWorkshop },
 
       // Registration
       { path: "register/:programId", Component: Registration },

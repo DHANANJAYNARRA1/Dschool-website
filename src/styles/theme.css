@@ -15,6 +15,7 @@
   --primary-foreground: #FFFFFF;
   --secondary: #F8FAFC;
   --secondary-foreground: #1E293B;
+  --surface: #F8FAFC;
   --muted: #F1F5F9;
   --muted-foreground: #64748B;
   --accent: #D4AF37;
@@ -92,6 +93,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-surface: var(--surface);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);

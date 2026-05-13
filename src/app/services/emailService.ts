@@ -18,6 +18,12 @@ export const EMAIL_CONFIG = {
   CONTACT_USER_TEMPLATE_ID: 'template_81nmg3e',    // confirmation → user
   CONTACT_ADMIN_TEMPLATE_ID: 'template_1dx63bd',   // enquiry details → admin
 
+  // Workshop registration – service_03rf4k4
+  WORKSHOP_SERVICE_ID: 'service_03rf4k4',
+  WORKSHOP_PUBLIC_KEY: 'AKm9kIcwEOq4RDLQA',         // same EmailJS account public key
+  WORKSHOP_USER_TEMPLATE_ID: 'template_6wldtpe',  // ← replace with ID from EmailJS after creating
+  WORKSHOP_ADMIN_TEMPLATE_ID: 'template_kvvn15l',// ← replace with ID from EmailJS after creating
+
   CLOUDINARY_CLOUD_NAME: 'dkjsfmmud',
   CLOUDINARY_UPLOAD_PRESET: 'kymp2kmj',
 
@@ -26,6 +32,10 @@ export const EMAIL_CONFIG = {
 
 export function initEmailJS() {
   emailjs.init(EMAIL_CONFIG.PUBLIC_KEY);
+}
+
+export function initWorkshopEmailJS() {
+  emailjs.init(EMAIL_CONFIG.WORKSHOP_PUBLIC_KEY);
 }
 
 function formatDate() {
@@ -268,5 +278,63 @@ export async function sendContactAdminEmail(data: ContactEmailData) {
       reply_to:   data.email,
     },
     EMAIL_CONFIG.CONTACT_PUBLIC_KEY,
+  );
+}
+
+// ─── Workshop Registration Emails ─────────────────────────────────────────────
+
+export interface WorkshopEmailData {
+  name: string;
+  email: string;
+  phone: string;
+  organization: string;
+  experience: string;
+  specialRequirements: string;
+  workshopTitle: string;
+  workshopDate: string;
+  workshopTime: string;
+  workshopPrice: string;
+}
+
+// Registrant receives a confirmation email
+export async function sendWorkshopUserConfirmationEmail(data: WorkshopEmailData) {
+  return emailjs.send(
+    EMAIL_CONFIG.WORKSHOP_SERVICE_ID,
+    EMAIL_CONFIG.WORKSHOP_USER_TEMPLATE_ID,
+    {
+      to_name:           data.name,
+      to_email:          data.email,
+      from_name:         'D School',
+      workshop_name:     data.workshopTitle,
+      workshop_date:     data.workshopDate,
+      workshop_time:     data.workshopTime,
+      workshop_price:    data.workshopPrice,
+      registration_date: formatDate(),
+      reply_to:          EMAIL_CONFIG.ADMIN_EMAIL,
+    },
+    EMAIL_CONFIG.WORKSHOP_PUBLIC_KEY,
+  );
+}
+
+// Admin receives full registration details at dschool@sims.healthcare
+export async function sendWorkshopAdminNotificationEmail(data: WorkshopEmailData) {
+  return emailjs.send(
+    EMAIL_CONFIG.WORKSHOP_SERVICE_ID,
+    EMAIL_CONFIG.WORKSHOP_ADMIN_TEMPLATE_ID,
+    {
+      from_name:            data.name,
+      user_email:           data.email,
+      phone:                data.phone,
+      organization:         data.organization || 'Not provided',
+      experience:           data.experience,
+      special_requirements: data.specialRequirements || 'None',
+      workshop_name:        data.workshopTitle,
+      workshop_date:        data.workshopDate,
+      workshop_time:        data.workshopTime,
+      workshop_price:       data.workshopPrice,
+      registration_date:    formatDate(),
+      reply_to:             data.email,
+    },
+    EMAIL_CONFIG.WORKSHOP_PUBLIC_KEY,
   );
 }

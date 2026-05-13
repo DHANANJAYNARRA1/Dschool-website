@@ -12,6 +12,7 @@ export default function Navigation() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Programs", href: "/programs" },
+    { name: "Workshops", href: "/workshops", isNew: true },
     { name: "Placements", href: "/placements" },
     { name: "Gallery", href: "/gallery" },
     { name: "Contact", href: "/contact" },
@@ -20,14 +21,16 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-24">
+        <div className="flex justify-between items-center h-20 md:h-32">
           <Link to="/" onClick={() => setIsOpen(false)}>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-3 cursor-pointer"
             >
-              <img src={dschoolLogo} alt="D School" className="h-12 md:h-20 w-auto object-contain" />
+              <div className="overflow-hidden h-14 md:h-24 w-fit flex items-center flex-shrink-0">
+                <img src={dschoolLogo} alt="D School" className="h-36 md:h-56 w-auto object-contain" />
+              </div>
             </motion.div>
           </Link>
 
@@ -39,11 +42,16 @@ export default function Navigation() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`hover:text-primary transition-colors font-medium cursor-pointer ${
+                  className={`hover:text-primary transition-colors font-medium cursor-pointer relative ${
                     location.pathname === link.href ? "text-primary" : "text-foreground"
                   }`}
                 >
                   {link.name}
+                  {link.isNew && (
+                    <span className="absolute -top-2 -right-8 bg-accent text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      NEW
+                    </span>
+                  )}
                 </motion.span>
               </Link>
             ))}
@@ -83,6 +91,11 @@ export default function Navigation() {
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
+                  {link.isNew && (
+                    <span className="ml-2 bg-accent text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      NEW
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>

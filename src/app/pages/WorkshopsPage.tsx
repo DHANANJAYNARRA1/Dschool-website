@@ -1,0 +1,296 @@
+import { motion } from "motion/react";
+import { Calendar, Clock, Users, Award, ArrowRight } from "lucide-react";
+import { Link } from "react-router";
+
+export default function WorkshopsPage() {
+  const upcomingWorkshops = [
+    {
+      id: "patient-care",
+      title: "Advanced Patient Care Techniques",
+      date: "June 15, 2026",
+      time: "9:00 AM - 4:00 PM",
+      duration: "1 Day",
+      capacity: "30 Participants",
+      level: "Intermediate",
+      instructor: "Dr. Deepti G",
+      description: "Master advanced patient care methodologies including critical care protocols, emergency response, and compassionate communication.",
+      category: "Clinical Skills",
+      price: "₹5,000",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop"
+    },
+    {
+      id: "leadership-management",
+      title: "Healthcare Leadership & Team Management",
+      date: "June 22, 2026",
+      time: "10:00 AM - 5:00 PM",
+      duration: "1 Day",
+      capacity: "25 Participants",
+      level: "Advanced",
+      instructor: "Industry Expert Panel",
+      description: "Develop leadership skills essential for managing healthcare teams, including conflict resolution, performance management, and strategic planning.",
+      category: "Management",
+      price: "₹6,500",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop"
+    },
+    {
+      id: "digital-health",
+      title: "Digital Health Technologies",
+      date: "July 5, 2026",
+      time: "9:00 AM - 3:00 PM",
+      duration: "1 Day",
+      capacity: "40 Participants",
+      level: "Beginner",
+      instructor: "Tech Healthcare Specialists",
+      description: "Explore the latest digital health technologies including EHR systems, telemedicine platforms, and healthcare analytics tools.",
+      category: "Technology",
+      price: "₹4,500",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop"
+    },
+    {
+      id: "infection-control",
+      title: "Infection Control & Safety Protocols",
+      date: "July 12, 2026",
+      time: "8:30 AM - 4:30 PM",
+      duration: "1 Day",
+      capacity: "35 Participants",
+      level: "All Levels",
+      instructor: "Certified Safety Officers",
+      description: "Comprehensive training on infection prevention, safety protocols, and maintaining sterile environments in healthcare settings.",
+      category: "Safety",
+      price: "₹4,000",
+      image: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&h=500&fit=crop"
+    },
+    {
+      id: "mental-health",
+      title: "Mental Health First Aid for Healthcare Workers",
+      date: "July 20, 2026",
+      time: "10:00 AM - 4:00 PM",
+      duration: "1 Day",
+      capacity: "30 Participants",
+      level: "All Levels",
+      instructor: "Licensed Mental Health Counselors",
+      description: "Learn to recognize and respond to mental health crises, support colleagues, and maintain your own mental wellbeing.",
+      category: "Wellbeing",
+      price: "₹5,500",
+      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=500&fit=crop"
+    },
+    {
+      id: "evidence-based",
+      title: "Evidence-Based Practice in Nursing",
+      date: "August 3, 2026",
+      time: "9:00 AM - 5:00 PM",
+      duration: "1 Day",
+      capacity: "25 Participants",
+      level: "Intermediate",
+      instructor: "Research Nursing Faculty",
+      description: "Master the art of integrating research evidence into clinical practice for improved patient outcomes and professional development.",
+      category: "Professional Development",
+      price: "₹5,000",
+      image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&h=500&fit=crop"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen pt-16 md:pt-24 bg-background">
+      {/* Hero Section */}
+      <section className="relative py-20 bg-gradient-to-br from-primary via-blue-900 to-primary overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 py-2 rounded-full mb-6">
+              <Award className="w-5 h-5" />
+              <span className="text-sm font-medium">Professional Development Workshops</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              Elevate Your Skills
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
+              Join our expertly-crafted workshops designed to enhance your healthcare expertise and advance your career
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Workshops Grid */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Upcoming Workshops
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Enroll in our upcoming workshops and take your career to the next level
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {upcomingWorkshops.map((workshop, index) => (
+              <motion.div
+                key={workshop.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <Link to={`/workshops/${workshop.id}`}>
+                  <div className="bg-card rounded-xl overflow-hidden hover:shadow-xl transition-all border border-border h-full flex flex-col group-hover:-translate-y-1">
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={workshop.image}
+                        alt={workshop.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 rounded-full text-sm font-bold">
+                        {workshop.price}
+                      </div>
+                      <div className="absolute bottom-4 left-4 bg-primary/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                        {workshop.category}
+                      </div>
+                    </div>
+
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                        <Calendar className="w-4 h-4" />
+                        <span>{workshop.date}</span>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                        {workshop.title}
+                      </h3>
+
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2 flex-1">
+                        {workshop.description}
+                      </p>
+
+                      <div className="space-y-2 mb-4">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span>{workshop.time} • {workshop.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Users className="w-4 h-4 text-primary" />
+                          <span>{workshop.capacity}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Award className="w-4 h-4 text-primary" />
+                          <span>Level: {workshop.level}</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-border">
+                        <p className="text-sm text-muted-foreground mb-3">
+                          <span className="font-medium text-foreground">Instructor:</span> {workshop.instructor}
+                        </p>
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-blue-600 text-white px-6 py-2 rounded-lg w-full justify-center font-medium">
+                          <span>View Details & Register</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-gradient-to-br from-surface/50 to-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Why Attend Our Workshops?
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: Award,
+                title: "Expert Instructors",
+                description: "Learn from industry leaders and certified professionals"
+              },
+              {
+                icon: Users,
+                title: "Hands-On Learning",
+                description: "Interactive sessions with practical applications"
+              },
+              {
+                icon: Calendar,
+                title: "Flexible Schedule",
+                description: "Weekend and weekday options available"
+              },
+              {
+                icon: Clock,
+                title: "Certificate",
+                description: "Receive a certificate of completion"
+              }
+            ].map((benefit, index) => (
+              <motion.div
+                key={benefit.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <benefit.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-2">{benefit.title}</h3>
+                <p className="text-muted-foreground">{benefit.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-primary via-blue-900 to-primary">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Ready to Enhance Your Skills?
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Join thousands of healthcare professionals who have advanced their careers through our workshops
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-accent text-primary px-8 py-4 rounded-lg hover:bg-yellow-400 transition-colors text-lg font-semibold"
+            >
+              <span>Contact Us for More Information</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}

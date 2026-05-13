@@ -46,7 +46,9 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="mb-4">
-              <img src={dschoolLogo} alt="D School" className="h-20 w-auto object-contain" />
+              <div className="overflow-hidden h-24 flex items-center">
+                <img src={dschoolLogo} alt="D School" className="h-40 w-auto object-contain scale-[1.6] origin-center" />
+              </div>
             </div>
             <p className="opacity-75 mb-6">
               An initiative of SIMS Healthcare Pvt. Ltd., transforming healthcare professionals into global experts.
