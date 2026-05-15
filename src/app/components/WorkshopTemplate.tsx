@@ -30,6 +30,7 @@ interface WorkshopTemplateProps {
   workshopId: string;
   category: string;
   image: string;
+  imageHeight?: string;
 }
 
 export default function WorkshopTemplate({
@@ -46,6 +47,7 @@ export default function WorkshopTemplate({
   outcomes,
   category,
   image,
+  imageHeight = "h-[400px]",
 }: WorkshopTemplateProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -187,7 +189,7 @@ export default function WorkshopTemplate({
                 <img
                   src={image}
                   alt={title}
-                  className="w-full h-[400px] object-cover"
+                  className={`w-full ${imageHeight} object-cover`}
                 />
               </div>
             </motion.div>

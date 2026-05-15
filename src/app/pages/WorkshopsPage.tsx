@@ -1,50 +1,53 @@
 import { motion } from "motion/react";
-import { Calendar, Clock, Users, Award, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Users, Award, ArrowRight, MapPin } from "lucide-react";
 import { Link } from "react-router";
 
 export default function WorkshopsPage() {
   const upcomingWorkshops = [
     {
-      id: "patient-care",
-      title: "Advanced Patient Care Techniques",
-      date: "June 15, 2026",
-      time: "9:00 AM - 4:00 PM",
-      duration: "1 Day",
-      capacity: "30 Participants",
-      level: "Intermediate",
-      instructor: "Dr. Deepti G",
-      description: "Master advanced patient care methodologies including critical care protocols, emergency response, and compassionate communication.",
-      category: "Clinical Skills",
-      price: "₹5,000",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop"
+      id: "lion-program",
+      title: "LION Program",
+      date: "July 2026, 1st Week (TBC)",
+      time: "To Be Confirmed",
+      duration: "TBC",
+      capacity: "30 Members",
+      level: "Nursing Leaders",
+      instructor: "Healthcare Leaders & Expert Mentors",
+      description: "Designed exclusively for nursing leaders, this program equips professionals with the essential skills required to meet evolving industry demands. Lead effectively, communicate with clarity, and create lasting impact.",
+      category: "Leadership",
+      price: "₹10,000",
+      image: "/assets/workshops-new/lion.png",
+      mode: "Offline"
     },
     {
-      id: "leadership-management",
-      title: "Healthcare Leadership & Team Management",
-      date: "June 22, 2026",
-      time: "10:00 AM - 5:00 PM",
+      id: "finance-workshop",
+      title: "Finance Workshop",
+      date: "June 20, 2026",
+      time: "To Be Confirmed",
       duration: "1 Day",
-      capacity: "25 Participants",
+      capacity: "100 Participants",
+      level: "All Levels",
+      instructor: "Experienced Healthcare & Finance Professionals",
+      description: "Curious to understand the financial side of healthcare? Gain expert insights, enhance financial awareness, and build confidence in managing financial aspects of hospital operations effectively.",
+      category: "Finance",
+      price: "₹599",
+      image: "/assets/workshops-new/finance.png",
+      mode: "Online"
+    },
+    {
+      id: "digital-health-revolution",
+      title: "Digital Health Revolution",
+      date: "July 2026, 3rd Week (TBC)",
+      time: "To Be Confirmed",
+      duration: "3 Months Online + 3-Day Immersion",
+      capacity: "30 Members",
       level: "Advanced",
-      instructor: "Industry Expert Panel",
-      description: "Develop leadership skills essential for managing healthcare teams, including conflict resolution, performance management, and strategic planning.",
-      category: "Management",
-      price: "₹6,500",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop"
-    },
-    {
-      id: "digital-health",
-      title: "Digital Health Technologies",
-      date: "July 5, 2026",
-      time: "9:00 AM - 3:00 PM",
-      duration: "1 Day",
-      capacity: "40 Participants",
-      level: "Beginner",
-      instructor: "Tech Healthcare Specialists",
-      description: "Explore the latest digital health technologies including EHR systems, telemedicine platforms, and healthcare analytics tools.",
-      category: "Technology",
-      price: "₹4,500",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop"
+      instructor: "Industry Leaders & Digital Health Specialists",
+      description: "Designed for healthcare professionals aspiring to lead in the digital era, offering advanced insights, practical frameworks, and global perspectives on digital health transformation.",
+      category: "Digital Health",
+      price: "₹25,000 - ₹30,000",
+      image: "/assets/workshops-new/Digital health.png",
+      mode: "Hybrid"
     },
     {
       id: "infection-control",
@@ -156,7 +159,7 @@ export default function WorkshopsPage() {
                         alt={workshop.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
-                      <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 rounded-full text-sm font-bold">
+                      <div className="absolute top-4 right-2 bg-accent text-primary px-2 py-0.5 rounded-full text-[10px] font-semibold">
                         {workshop.price}
                       </div>
                       <div className="absolute bottom-4 left-4 bg-primary/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -191,6 +194,12 @@ export default function WorkshopsPage() {
                           <Award className="w-4 h-4 text-primary" />
                           <span>Level: {workshop.level}</span>
                         </div>
+                        {'mode' in workshop && workshop.mode && (
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <MapPin className="w-4 h-4 text-primary" />
+                            <span>Mode: {workshop.mode}</span>
+                          </div>
+                        )}
                       </div>
 
                       <div className="pt-4 border-t border-border">

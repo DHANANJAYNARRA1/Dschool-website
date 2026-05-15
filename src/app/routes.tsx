@@ -16,6 +16,9 @@ import HospitalManagerProgram from "./pages/programs/HospitalManagerProgram";
 import DrTomorrowProgram from "./pages/programs/DrTomorrowProgram";
 
 // Workshop Pages
+import LionProgramWorkshop from "./pages/workshops/LionProgramWorkshop";
+import FinanceWorkshop from "./pages/workshops/FinanceWorkshop";
+import DigitalHealthRevolutionWorkshop from "./pages/workshops/DigitalHealthRevolutionWorkshop";
 import PatientCareWorkshop from "./pages/workshops/PatientCareWorkshop";
 import LeadershipManagementWorkshop from "./pages/workshops/LeadershipManagementWorkshop";
 import DigitalHealthWorkshop from "./pages/workshops/DigitalHealthWorkshop";
@@ -62,6 +65,9 @@ export const router = createBrowserRouter([
       { path: "programs/dr-tomorrow", Component: DrTomorrowProgram },
 
       // Workshop Detail Pages
+      { path: "workshops/lion-program", Component: LionProgramWorkshop },
+      { path: "workshops/finance-workshop", Component: FinanceWorkshop },
+      { path: "workshops/digital-health-revolution", Component: DigitalHealthRevolutionWorkshop },
       { path: "workshops/patient-care", Component: PatientCareWorkshop },
       { path: "workshops/leadership-management", Component: LeadershipManagementWorkshop },
       { path: "workshops/digital-health", Component: DigitalHealthWorkshop },

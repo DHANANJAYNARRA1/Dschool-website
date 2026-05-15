@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const heroImages = [
-  "/assets/home/design%201.jpg",
-  "/assets/home/design%202.jpg",
+  "/assets/home/home1.png",
+  "/assets/home/home2.png",
 ];
 
 export default function Hero() {
@@ -87,7 +87,7 @@ export default function Hero() {
             initial={false}
             animate={{ opacity: index === currentImage ? 1 : 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
+            className="absolute top-16 left-0 right-0 bottom-0"
           >
             <ImageWithFallback
               src={image}
@@ -116,41 +116,30 @@ export default function Hero() {
 
         {/* Right: full image panel */}
         <div className="w-1/2 relative overflow-hidden">
-          {/* design 1 */}
+          {/* home1 */}
           <motion.div
             initial={false}
             animate={{ opacity: currentImage === 0 ? 1 : 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
+            className="absolute top-16 md:top-24 left-0 right-0 bottom-0"
           >
             <ImageWithFallback
               src={heroImages[0]}
               alt="Healthcare professionals"
-              className="w-full h-full object-cover"
-              style={{ objectPosition: "center center" }}
+              className="w-full h-full object-cover object-center"
             />
           </motion.div>
-          {/* design 2 */}
+          {/* home2 */}
           <motion.div
             initial={false}
             animate={{ opacity: currentImage === 1 ? 1 : 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            style={{ position: "absolute", inset: 0, overflow: "hidden" }}
+            className="absolute top-16 md:top-24 left-0 right-0 bottom-0"
           >
-            <img
+            <ImageWithFallback
               src={heroImages[1]}
               alt="Healthcare professionals"
-              style={{
-                position: "absolute",
-                top: "96px",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                width: "100%",
-                height: "calc(100% - 96px)",
-                objectFit: "cover",
-                objectPosition: "center top",
-              }}
+              className="w-full h-full object-cover object-center"
             />
           </motion.div>
           <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-blue-900 to-transparent z-10 pointer-events-none" />
