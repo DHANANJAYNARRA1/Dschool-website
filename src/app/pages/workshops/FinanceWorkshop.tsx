@@ -8,7 +8,7 @@ export default function FinanceWorkshop() {
       time="To Be Confirmed"
       duration="1 Day"
       capacity="100 Participants"
-      level="All Levels"
+      level="Hospital Managers · Nurse Managers · HOD (Heads of Department) · Any Hospital Background Managers"
       instructor="Experienced Healthcare & Finance Professionals"
       price="₹599"
       description="Curious to understand the financial side of healthcare and strengthen your decision-making skills? This workshop offers a valuable opportunity to gain expert insights, enhance financial awareness, and build confidence in managing financial aspects effectively."

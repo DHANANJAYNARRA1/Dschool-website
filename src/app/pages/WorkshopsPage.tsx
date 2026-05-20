@@ -5,6 +5,21 @@ import { Link } from "react-router";
 export default function WorkshopsPage() {
   const upcomingWorkshops = [
     {
+      id: "finance-workshop",
+      title: "Finance Workshop",
+      date: "June 20, 2026",
+      time: "To Be Confirmed",
+      duration: "1 Day",
+      capacity: "100 Participants",
+      level: "Hospital Managers · Nurse Managers · HOD · Any Hospital Background Managers",
+      instructor: "Experienced Healthcare & Finance Professionals",
+      description: "Curious to understand the financial side of healthcare? Gain expert insights, enhance financial awareness, and build confidence in managing financial aspects of hospital operations effectively.",
+      category: "Finance",
+      price: "₹599",
+      image: "/assets/workshops-new/finance.png",
+      mode: "Online"
+    },
+    {
       id: "lion-program",
       title: "LION Program",
       date: "July 2026, 1st Week (TBC)",
@@ -18,21 +33,6 @@ export default function WorkshopsPage() {
       price: "₹10,000",
       image: "/assets/workshops-new/lion.png",
       mode: "Offline"
-    },
-    {
-      id: "finance-workshop",
-      title: "Finance Workshop",
-      date: "June 20, 2026",
-      time: "To Be Confirmed",
-      duration: "1 Day",
-      capacity: "100 Participants",
-      level: "All Levels",
-      instructor: "Experienced Healthcare & Finance Professionals",
-      description: "Curious to understand the financial side of healthcare? Gain expert insights, enhance financial awareness, and build confidence in managing financial aspects of hospital operations effectively.",
-      category: "Finance",
-      price: "₹599",
-      image: "/assets/workshops-new/finance.png",
-      mode: "Online"
     },
     {
       id: "digital-health-revolution",
@@ -49,48 +49,51 @@ export default function WorkshopsPage() {
       image: "/assets/workshops-new/Digital health.png",
       mode: "Hybrid"
     },
-    {
-      id: "infection-control",
-      title: "Infection Control & Safety Protocols",
-      date: "July 12, 2026",
-      time: "8:30 AM - 4:30 PM",
-      duration: "1 Day",
-      capacity: "35 Participants",
-      level: "All Levels",
-      instructor: "Certified Safety Officers",
-      description: "Comprehensive training on infection prevention, safety protocols, and maintaining sterile environments in healthcare settings.",
-      category: "Safety",
-      price: "₹4,000",
-      image: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&h=500&fit=crop"
+     {
+      id: "hr-workshop",
+      title: "HR Workshop",
+      date: "September 2026 (TBC)",
+      time: "To Be Confirmed",
+      duration: "TBC",
+      capacity: "To Be Updated",
+      level: "HR Professionals · Hospital Administrators · Healthcare Managers · Talent Acquisition Teams · Operations & Administrative Professionals",
+      instructor: "Administrative Staff College of India",
+      description: "A specialized Human Resources Excellence Program in collaboration with Administrative Staff College of India, focusing on modern HR strategies, workforce management, and leadership development for healthcare settings.",
+      category: "Human Resources",
+      price: "To Be Updated",
+      image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=500&fit=crop",
+      mode: "To Be Updated"
     },
     {
-      id: "mental-health",
-      title: "Mental Health First Aid for Healthcare Workers",
-      date: "July 20, 2026",
-      time: "10:00 AM - 4:00 PM",
-      duration: "1 Day",
-      capacity: "30 Participants",
-      level: "All Levels",
-      instructor: "Licensed Mental Health Counselors",
-      description: "Learn to recognize and respond to mental health crises, support colleagues, and maintain your own mental wellbeing.",
-      category: "Wellbeing",
-      price: "₹5,500",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=500&fit=crop"
+      id: "dr-tomorrow",
+      title: "DR Tomorrow",
+      date: "October 2026 (TBC)",
+      time: "To Be Confirmed",
+      duration: "TBC",
+      capacity: "20–30 Participants",
+      level: "Students (Age 13–16 Years)",
+      instructor: "Healthcare Professionals & Medical Experts",
+      description: "An engaging and interactive healthcare awareness program for children aged 13–16 years, exploring the world of healthcare, medicine, and health sciences through fun activities and career exposure sessions.",
+      category: "Youth Program",
+      price: "₹6,000",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop",
+      mode: "Offline"
     },
     {
-      id: "evidence-based",
-      title: "Evidence-Based Practice in Nursing",
-      date: "August 3, 2026",
-      time: "9:00 AM - 5:00 PM",
-      duration: "1 Day",
-      capacity: "25 Participants",
-      level: "Intermediate",
-      instructor: "Research Nursing Faculty",
-      description: "Master the art of integrating research evidence into clinical practice for improved patient outcomes and professional development.",
-      category: "Professional Development",
-      price: "₹5,000",
-      image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&h=500&fit=crop"
-    }
+      id: "doctor-prenure",
+      title: "DR Prenure",
+      date: "October 2026 (TBC)",
+      time: "To Be Confirmed",
+      duration: "TBC",
+      capacity: "To Be Updated",
+      level: "Experienced Doctors",
+      instructor: "Healthcare Experts & Industry Leaders",
+      description: "An exclusive professional development program for experienced doctors to enhance clinical excellence, leadership capabilities, patient engagement, and professional impact in today's evolving healthcare environment.",
+      category: "Leadership",
+      price: "To Be Updated",
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=500&fit=crop",
+      mode: "To Be Updated"
+    },
   ];
 
   return (
@@ -190,8 +193,8 @@ export default function WorkshopsPage() {
                           <Users className="w-4 h-4 text-primary" />
                           <span>{workshop.capacity}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Award className="w-4 h-4 text-primary" />
+                        <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Award className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                           <span>Level: {workshop.level}</span>
                         </div>
                         {'mode' in workshop && workshop.mode && (

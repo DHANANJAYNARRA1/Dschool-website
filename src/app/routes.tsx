@@ -22,9 +22,9 @@ import DigitalHealthRevolutionWorkshop from "./pages/workshops/DigitalHealthRevo
 import PatientCareWorkshop from "./pages/workshops/PatientCareWorkshop";
 import LeadershipManagementWorkshop from "./pages/workshops/LeadershipManagementWorkshop";
 import DigitalHealthWorkshop from "./pages/workshops/DigitalHealthWorkshop";
-import InfectionControlWorkshop from "./pages/workshops/InfectionControlWorkshop";
-import MentalHealthWorkshop from "./pages/workshops/MentalHealthWorkshop";
-import EvidenceBasedWorkshop from "./pages/workshops/EvidenceBasedWorkshop";
+import DrTomorrowWorkshop from "./pages/workshops/DrTomorrowWorkshop";
+import DoctorPrenureWorkshop from "./pages/workshops/DoctorPrenureWorkshop";
+import HRWorkshop from "./pages/workshops/HRWorkshop";
 
 // Other Pages
 import AboutPage from "./pages/AboutPage";
@@ -71,9 +71,9 @@ export const router = createBrowserRouter([
       { path: "workshops/patient-care", Component: PatientCareWorkshop },
       { path: "workshops/leadership-management", Component: LeadershipManagementWorkshop },
       { path: "workshops/digital-health", Component: DigitalHealthWorkshop },
-      { path: "workshops/infection-control", Component: InfectionControlWorkshop },
-      { path: "workshops/mental-health", Component: MentalHealthWorkshop },
-      { path: "workshops/evidence-based", Component: EvidenceBasedWorkshop },
+      { path: "workshops/dr-tomorrow", Component: DrTomorrowWorkshop },
+      { path: "workshops/doctor-prenure", Component: DoctorPrenureWorkshop },
+      { path: "workshops/hr-workshop", Component: HRWorkshop },
 
       // Registration
       { path: "register/:programId", Component: Registration },
