@@ -14,7 +14,7 @@ export default function DoctorPrenureWorkshop() {
       description="DR Prenure is an exclusive professional development program specially designed for experienced doctors who aspire to enhance their clinical excellence, leadership capabilities, patient engagement, and professional impact in today's evolving healthcare environment."
       workshopId="doctor-prenure"
       category="Leadership"
-      image="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=500&fit=crop"
+      image="/assets/workshops-new/drprenure.png"
       highlights={[
         {
           title: "Advanced Professional Development",

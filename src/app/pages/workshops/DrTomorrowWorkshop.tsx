@@ -14,7 +14,7 @@ export default function DrTomorrowWorkshop() {
       description="DR Tomorrow is an engaging and interactive healthcare awareness program specially designed for children aged 13 to 16 years. The program introduces young minds to the fascinating world of healthcare, medicine, and health sciences through fun learning experiences, practical activities, and career exploration sessions."
       workshopId="dr-tomorrow"
       category="Youth Program"
-      image="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop"
+      image="/assets/workshops-new/DR Tomorrow.png"
       highlights={[
         {
           title: "Human Body & Health Sciences",

@@ -14,7 +14,7 @@ export default function HRWorkshop() {
       description="In today's rapidly evolving healthcare environment, Human Resources plays a critical role in building strong teams, enhancing organizational culture, and driving hospital performance. This specialized workshop, designed in collaboration with Administrative Staff College of India, empowers HR professionals with industry-relevant knowledge and practical leadership capabilities."
       workshopId="hr-workshop"
       category="Human Resources"
-      image="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=500&fit=crop"
+      image="/assets/workshops-new/Hr workshop .png"
       highlights={[
         {
           title: "Strategic HR Management",

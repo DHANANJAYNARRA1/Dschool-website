@@ -41,7 +41,7 @@ export default function WorkshopsPage() {
       time: "To Be Confirmed",
       duration: "3 Months Online + 3-Day Immersion",
       capacity: "30 Members",
-      level: "Advanced",
+      level: "clinical practitioners, administrators, policy-makers, managers, researchers, and technology specialists",
       instructor: "Industry Leaders & Digital Health Specialists",
       description: "Designed for healthcare professionals aspiring to lead in the digital era, offering advanced insights, practical frameworks, and global perspectives on digital health transformation.",
       category: "Digital Health",
@@ -61,7 +61,7 @@ export default function WorkshopsPage() {
       description: "A specialized Human Resources Excellence Program in collaboration with Administrative Staff College of India, focusing on modern HR strategies, workforce management, and leadership development for healthcare settings.",
       category: "Human Resources",
       price: "To Be Updated",
-      image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=500&fit=crop",
+      image: "/assets/workshops-new/Hr workshop .png",
       mode: "To Be Updated"
     },
     {
@@ -76,7 +76,7 @@ export default function WorkshopsPage() {
       description: "An engaging and interactive healthcare awareness program for children aged 13–16 years, exploring the world of healthcare, medicine, and health sciences through fun activities and career exposure sessions.",
       category: "Youth Program",
       price: "₹6,000",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop",
+      image: "/assets/workshops-new/DR Tomorrow.png",
       mode: "Offline"
     },
     {
@@ -91,7 +91,7 @@ export default function WorkshopsPage() {
       description: "An exclusive professional development program for experienced doctors to enhance clinical excellence, leadership capabilities, patient engagement, and professional impact in today's evolving healthcare environment.",
       category: "Leadership",
       price: "To Be Updated",
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=500&fit=crop",
+      image: "/assets/workshops-new/drprenure.png",
       mode: "To Be Updated"
     },
   ];
