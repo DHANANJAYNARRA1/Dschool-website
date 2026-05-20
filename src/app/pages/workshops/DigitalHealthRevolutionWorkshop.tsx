@@ -8,7 +8,7 @@ export default function DigitalHealthRevolutionWorkshop() {
       time="To Be Confirmed"
       duration="3 Months Online + 3-Day Immersion"
       capacity="30 Members"
-      level="Advanced"
+      level="Working professionals with minimum of three (3) years of experience in the health domain. Healthcare Administrators, Managers, Health Tech Entrepreneurs & Enthusiasts."
       instructor="Industry Leaders & Digital Health Specialists"
       price="₹25,000 - ₹30,000"
       description="Designed for healthcare professionals aspiring to lead in the digital era, the program offers advanced insights, practical frameworks, and global perspectives on digital health transformation."

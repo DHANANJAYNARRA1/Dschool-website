@@ -41,7 +41,7 @@ export default function WorkshopsPage() {
       time: "To Be Confirmed",
       duration: "3 Months Online + 3-Day Immersion",
       capacity: "30 Members",
-      level: "clinical practitioners, administrators, policy-makers, managers, researchers, and technology specialists",
+      level: "Working professionals with minimum of three (3) years of experience in the health domain.Healthcare Administrators, Managers, Health Tech Entrepreneurs & Enthusiasts.",
       instructor: "Industry Leaders & Digital Health Specialists",
       description: "Designed for healthcare professionals aspiring to lead in the digital era, offering advanced insights, practical frameworks, and global perspectives on digital health transformation.",
       category: "Digital Health",
@@ -195,7 +195,7 @@ export default function WorkshopsPage() {
                         </div>
                         <div className="flex items-start gap-2 text-sm text-muted-foreground">
                           <Award className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                          <span>Level: {workshop.level}</span>
+                          <span className="line-clamp-2">Level: {workshop.level}</span>
                         </div>
                         {'mode' in workshop && workshop.mode && (
                           <div className="flex items-center gap-2 text-sm text-muted-foreground">
