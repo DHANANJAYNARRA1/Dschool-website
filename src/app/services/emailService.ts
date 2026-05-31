@@ -24,6 +24,12 @@ export const EMAIL_CONFIG = {
   WORKSHOP_USER_TEMPLATE_ID: 'template_6wldtpe',  // ← replace with ID from EmailJS after creating
   WORKSHOP_ADMIN_TEMPLATE_ID: 'template_kvvn15l',// ← replace with ID from EmailJS after creating
 
+  // PET registration
+  PET_SERVICE_ID: 'service_zn07dq8',
+  PET_PUBLIC_KEY: 'Wfwl9W3DuV_mnriZ6',
+  PET_USER_TEMPLATE_ID: 'template_3r4v8tp',
+  PET_ADMIN_TEMPLATE_ID: 'template_wj0xmli',
+
   CLOUDINARY_CLOUD_NAME: 'dkjsfmmud',
   CLOUDINARY_UPLOAD_PRESET: 'kymp2kmj',
 
@@ -316,6 +322,10 @@ export async function sendWorkshopUserConfirmationEmail(data: WorkshopEmailData)
   );
 }
 
+export function initPETEmailJS() {
+  emailjs.init(EMAIL_CONFIG.PET_PUBLIC_KEY);
+}
+
 // Admin receives full registration details at dschool@sims.healthcare
 export async function sendWorkshopAdminNotificationEmail(data: WorkshopEmailData) {
   return emailjs.send(
@@ -336,5 +346,93 @@ export async function sendWorkshopAdminNotificationEmail(data: WorkshopEmailData
       reply_to:             data.email,
     },
     EMAIL_CONFIG.WORKSHOP_PUBLIC_KEY,
+  );
+}
+
+// ─── PET Registration Emails ──────────────────────────────────────────────────
+
+export interface PETEmailData {
+  name: string;
+  email: string;
+  phone: string;
+  education: string;
+  experience?: string;
+  preferredDuration?: string;
+  preferredBatch: string;
+  specialRequirements: string;
+  programTitle: string;
+  programCategory: string;
+}
+
+// Registrant receives a confirmation email
+export async function sendPETUserConfirmationEmail(data: PETEmailData) {
+  return emailjs.send(
+    EMAIL_CONFIG.PET_SERVICE_ID,
+    EMAIL_CONFIG.PET_USER_TEMPLATE_ID,
+    {
+      to_name:            data.name,
+      to_email:           data.email,
+      from_name:          'D School',
+      program_name:       data.programTitle,
+      program_category:   data.programCategory,
+      preferred_duration: data.preferredDuration || 'As per program',
+      preferred_batch:    data.preferredBatch || 'To be confirmed',
+      registration_date:  formatDate(),
+      reply_to:           EMAIL_CONFIG.ADMIN_EMAIL,
+    },
+    EMAIL_CONFIG.PET_PUBLIC_KEY,
+  );
+}
+
+// Admin receives full PET registration details at dschool@sims.healthcare
+export async function sendPETAdminNotificationEmail(data: PETEmailData) {
+  const date = formatDate();
+  const SEP = '━━━━━━━━━━━━━━━━━━━━━━━━━';
+
+  const applicantLines = [
+    `Full Name           : ${data.name}`,
+    `Email               : ${data.email}`,
+    `Phone               : ${data.phone}`,
+    `Education           : ${data.education}`,
+    ...(data.experience ? [`Experience          : ${data.experience}`] : []),
+  ];
+
+  const message = [
+    'A new PET registration has been received. Reply to this email to contact the applicant directly.',
+    '',
+    SEP,
+    'APPLICANT DETAILS',
+    SEP,
+    ...applicantLines,
+    SEP,
+    'PROGRAM DETAILS',
+    SEP,
+    `Program             : ${data.programTitle}`,
+    `Category            : ${data.programCategory}`,
+    `Preferred Duration  : ${data.preferredDuration || 'As per program'}`,
+    `Preferred Start Date: ${data.preferredBatch || 'Not specified'}`,
+    `Registered On       : ${date}`,
+    SEP,
+    'ADDITIONAL INFO',
+    SEP,
+    `Special Requirements: ${data.specialRequirements || 'None'}`,
+    SEP,
+    '',
+    'D School Team',
+    'dschool@sims.healthcare',
+  ].join('\n');
+
+  return emailjs.send(
+    EMAIL_CONFIG.PET_SERVICE_ID,
+    EMAIL_CONFIG.PET_ADMIN_TEMPLATE_ID,
+    {
+      from_name:         data.name,
+      user_email:        data.email,
+      program_name:      data.programTitle,
+      registration_date: date,
+      message,
+      reply_to:          data.email,
+    },
+    EMAIL_CONFIG.PET_PUBLIC_KEY,
   );
 }

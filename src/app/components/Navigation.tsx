@@ -1,12 +1,19 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import dschoolLogo from "../../imports/dschool_image.jpeg";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -19,17 +26,19 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background backdrop-blur-md border-b border-border">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      scrolled ? "bg-white shadow-sm" : "bg-background/80 backdrop-blur-md"
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-32">
+        <div className="flex justify-between items-center h-20">
           <Link to="/" onClick={() => setIsOpen(false)}>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-3 cursor-pointer"
             >
-              <div className="overflow-hidden h-14 md:h-24 w-fit flex items-center flex-shrink-0">
-                <img src={dschoolLogo} alt="D School" className="h-36 md:h-56 w-auto object-contain" />
+              <div className="overflow-hidden h-14 w-fit flex items-center flex-shrink-0">
+                <img src={dschoolLogo} alt="D School" className="h-36 w-auto object-contain" />
               </div>
             </motion.div>
           </Link>
@@ -59,11 +68,10 @@ export default function Navigation() {
 
           {/* Hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+            className="md:hidden text-foreground"
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
           >
-            {isOpen ? <X size={26} /> : <Menu size={26} />}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
@@ -75,18 +83,15 @@ export default function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-background border-t border-border shadow-lg overflow-hidden"
+            className="md:hidden bg-white border-t border-border"
           >
-            <div className="px-4 py-3 space-y-1">
+            <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className={`flex items-center py-3 px-4 rounded-lg text-base font-medium transition-colors ${
-                    location.pathname === link.href
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground hover:bg-muted hover:text-primary"
+                  className={`block py-2 hover:text-primary transition-colors font-medium relative ${
+                    location.pathname === link.href ? "text-primary" : "text-foreground"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

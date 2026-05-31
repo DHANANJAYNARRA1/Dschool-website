@@ -1,8 +1,10 @@
 import { motion } from "motion/react";
-import { Calendar, Clock, Users, Award, ArrowRight, MapPin } from "lucide-react";
-import { Link } from "react-router";
+import { Calendar, Clock, Users, Award, ArrowRight, MapPin, GraduationCap } from "lucide-react";
+import { Link, useLocation } from "react-router";
 
 export default function WorkshopsPage() {
+  const location = useLocation();
+  const isWorkshopsTab = location.pathname === "/workshops";
   const upcomingWorkshops = [
     {
       id: "finance-workshop",
@@ -124,6 +126,54 @@ export default function WorkshopsPage() {
               Join our expertly-crafted workshops designed to enhance your healthcare expertise and advance your career
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Sub Navigation Tabs */}
+      <section className="bg-background border-b border-border sticky top-16 md:top-20 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex gap-1">
+            <Link
+              to="/workshops"
+              className={`px-6 py-4 font-semibold transition-all relative ${
+                isWorkshopsTab
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5" />
+                <span>Workshops</span>
+              </div>
+              {isWorkshopsTab && (
+                <motion.div
+                  layoutId="workshopTab"
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </Link>
+            <Link
+              to="/workshops/pet"
+              className={`px-6 py-4 font-semibold transition-all relative ${
+                !isWorkshopsTab
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <GraduationCap className="w-5 h-5" />
+                <span>PET - Professional Examination Training</span>
+              </div>
+              {!isWorkshopsTab && (
+                <motion.div
+                  layoutId="workshopTab"
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </Link>
+          </div>
         </div>
       </section>
 

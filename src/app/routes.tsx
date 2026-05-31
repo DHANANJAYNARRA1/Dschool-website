@@ -15,6 +15,14 @@ import LeadershipProgram from "./pages/programs/LeadershipProgram";
 import HospitalManagerProgram from "./pages/programs/HospitalManagerProgram";
 import DrTomorrowProgram from "./pages/programs/DrTomorrowProgram";
 
+// PET Program Pages
+import NEETProgram from "./pages/pet/NEETProgram";
+import NCLEXProgram from "./pages/pet/NCLEXProgram";
+import CBTProgram from "./pages/pet/CBTProgram";
+import OSCEProgram from "./pages/pet/OSCEProgram";
+import IELTSProgram from "./pages/pet/IELTSProgram";
+import OETProgram from "./pages/pet/OETProgram";
+
 // Workshop Pages
 import LionProgramWorkshop from "./pages/workshops/LionProgramWorkshop";
 import FinanceWorkshop from "./pages/workshops/FinanceWorkshop";
@@ -30,6 +38,7 @@ import HRWorkshop from "./pages/workshops/HRWorkshop";
 import AboutPage from "./pages/AboutPage";
 import AllPrograms from "./pages/AllPrograms";
 import WorkshopsPage from "./pages/WorkshopsPage";
+import PETPage from "./pages/PETPage";
 import PlacementsPage from "./pages/PlacementsPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactPage from "./pages/ContactPage";
@@ -48,6 +57,7 @@ export const router = createBrowserRouter([
       { path: "about", Component: AboutPage },
       { path: "programs", Component: AllPrograms },
       { path: "workshops", Component: WorkshopsPage },
+      { path: "workshops/pet", Component: PETPage },
       { path: "placements", Component: PlacementsPage },
       { path: "gallery", Component: GalleryPage },
       { path: "contact", Component: ContactPage },
@@ -74,6 +84,14 @@ export const router = createBrowserRouter([
       { path: "workshops/dr-tomorrow", Component: DrTomorrowWorkshop },
       { path: "workshops/doctor-prenure", Component: DoctorPrenureWorkshop },
       { path: "workshops/hr-workshop", Component: HRWorkshop },
+
+      // PET Program Detail Pages
+      { path: "workshops/pet/neet", Component: NEETProgram },
+      { path: "workshops/pet/nclex", Component: NCLEXProgram },
+      { path: "workshops/pet/cbt", Component: CBTProgram },
+      { path: "workshops/pet/osce", Component: OSCEProgram },
+      { path: "workshops/pet/ielts", Component: IELTSProgram },
+      { path: "workshops/pet/oet", Component: OETProgram },
 
       // Registration
       { path: "register/:programId", Component: Registration },
